@@ -1,0 +1,26 @@
+# MAC
+.DS_Store
+
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+# IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Class
+target/
+
+# Log
+logs/
+log/
+*.log
+
+about.txt
