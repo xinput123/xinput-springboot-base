@@ -13,7 +13,7 @@
 
     <groupId>com.github.xinput123</groupId>
     <artifactId>xinput-springboot-base</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <name>xinput-springboot-base</name>
     <description>springboot的一个基本封装</description>
@@ -192,6 +192,11 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>fluent-hc</artifactId>
             <version>4.5.12</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

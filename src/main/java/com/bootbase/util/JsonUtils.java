@@ -82,6 +82,10 @@ public class JsonUtils {
      */
 
     public static <T> T toBean(String content, Class<T> clazz) {
+        if (StringUtils.isNullOrEmpty(content)) {
+            return null;
+        }
+
         T t = null;
         try {
             t = mapper.readValue(content, clazz);
@@ -104,6 +108,10 @@ public class JsonUtils {
      * @return
      */
     public static <T> T toBean(Reader reader, Class<T> clazz) {
+        if (reader == null) {
+            return null;
+        }
+
         T t = null;
         try {
             t = mapper.readValue(reader, clazz);
@@ -126,6 +134,10 @@ public class JsonUtils {
      * @return
      */
     public static <T> T toBean(InputStream stream, Class<T> clazz) {
+        if (stream == null) {
+            return null;
+        }
+
         T t = null;
         try {
             t = mapper.readValue(stream, clazz);
@@ -147,6 +159,9 @@ public class JsonUtils {
      * @return
      */
     public static <T> List<T> toList(String content, Class<T> clazz) {
+        if (content == null) {
+            return null;
+        }
         return (List<T>) readValueList(content, ArrayList.class, clazz);
     }
 
@@ -159,6 +174,10 @@ public class JsonUtils {
      * @return
      */
     private static Object readValueList(String content, Class collectionClass, Class clazz) {
+        if (content == null) {
+            return null;
+        }
+
         Object o = null;
 
         try {

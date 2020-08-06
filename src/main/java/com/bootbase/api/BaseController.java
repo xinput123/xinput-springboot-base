@@ -252,6 +252,13 @@ public abstract class BaseController {
     }
 
     /**
+     * Send 205 NO CONTENT
+     */
+    protected void resetContent() {
+        throw new BaseException(HttpStatus.RESET_CONTENT);
+    }
+
+    /**
      * Send 301 redirect
      *
      * @param url
