@@ -13,11 +13,22 @@
 
     <groupId>com.github.xinput123</groupId>
     <artifactId>xinput-springboot-base</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 
     <name>xinput-springboot-base</name>
     <description>springboot的一个基本封装</description>
     <url>https://github.com/xinput123/xinput-springboot-base</url>
+
+    <developers>
+        <developer>
+            <name>xinput</name>
+            <email>xinput.xx@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -32,6 +43,22 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <!-- 移除tomcat，使用jetty -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
             <exclusions>
                 <!-- 移除tomcat，使用jetty -->
                 <exclusion>
@@ -193,6 +220,13 @@
             <artifactId>fluent-hc</artifactId>
             <version>4.5.12</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.51.Final</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -216,17 +250,6 @@
         <connection>https://github.com/xinput123/xinput-springboot-base.git</connection>
         <url>https://github.com/xinput123/xinput-springboot-base</url>
     </scm>
-
-    <developers>
-        <developer>
-            <name>xinput</name>
-            <email>xinput.xx@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
 
     <!-- 项目构建 -->
     <build>
