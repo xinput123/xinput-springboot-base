@@ -20,6 +20,7 @@ import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -87,8 +88,8 @@ public abstract class BaseController {
      */
     protected void setHeader(String headerName, String value) {
         HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
-        String headerValue = response.getHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY);
-        response.setHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY, headerValue + StringUtils.COMMA + headerName);
+        String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + headerName);
 
         response.setHeader(headerName, value);
     }
@@ -96,8 +97,8 @@ public abstract class BaseController {
     protected void setHeader(List<Header> headers) {
         HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
         String headerNames = StreamUtils.union(StreamUtils.collectColumn(headers, Header::getName));
-        String headerValue = response.getHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY);
-        response.setHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY, headerValue + StringUtils.COMMA + headerNames);
+        String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + headerNames);
 
         if (CollectionUtils.isEmpty(headers)) {
             headers.forEach(header -> response.setHeader(header.getName(), String.valueOf(header.getValue())));
@@ -109,8 +110,8 @@ public abstract class BaseController {
      */
     protected void renderEmptyList() {
         HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
-        String headerValue = response.getHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY);
-        response.setHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY, headerValue + StringUtils.COMMA + HeaderConsts.TOTOL_COUNT_KEY);
+        String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + HeaderConsts.TOTOL_COUNT_KEY);
         response.setHeader(HeaderConsts.TOTOL_COUNT_KEY, "0");
         throw new BaseException(HttpStatus.OK, Lists.newArrayList());
     }
@@ -162,7 +163,7 @@ public abstract class BaseController {
         }
 
         try {
-            if (StringUtils.isEmpty(response.getHeader(HeaderConsts.CONTENT_DISPOSITION_KEY))) {
+            if (StringUtils.isEmpty(response.getHeader(HttpHeaders.CONTENT_DISPOSITION))) {
                 addContentDispositionHeader(response, name, inline);
             }
             if (file != null) {
@@ -216,14 +217,14 @@ public abstract class BaseController {
 
     private void addContentDispositionHeader(HttpServletResponse response, String name, boolean inline) throws UnsupportedEncodingException {
         if (name == null) {
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, dispositionType(inline));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, dispositionType(inline));
         } else if (canAsciiEncode(name)) {
             String contentDisposition = "%s; filename=\"%s\"";
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, String.format(contentDisposition, dispositionType(inline), name));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), name));
         } else {
             String encoding = response.getCharacterEncoding();
             String contentDisposition = "%1$s; filename*=" + encoding + "''%2$s; filename=\"%2$s\"";
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, String.format(contentDisposition, dispositionType(inline), encoder.encode(name, encoding)));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), encoder.encode(name, encoding)));
         }
     }
 
@@ -272,7 +273,7 @@ public abstract class BaseController {
      */
     protected void redirect(String url) {
         HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
-        response.setHeader("Location", url);
+        response.setHeader(HttpHeaders.LOCATION, url);
         try {
             response.sendRedirect(url);
         } catch (IOException e) {

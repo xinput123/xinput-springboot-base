@@ -19,11 +19,17 @@ import static java.net.URLEncoder.encode;
  * 代码参考 https://github.com/fit2cloud/qingcloud-api-java-wrapper/blob/master/src/main/java/com/fit2cloud/qingcloud/wsclient/QingCloudWSClient.java
  */
 public class SignatureUtil {
+
     private static final String DEFAULT_ENCODING = "UTF-8";
-    final static String SEPARATOR = "&";
-    final static String VERSION = "1";
-    // 1 year
-    final static int DEFAULT_EXPIRE = 10;
+
+    private final static String VERSION = "1";
+
+    private static final String ALGORITHM = "HmacSHA256";
+
+    /**
+     * 1 year
+     */
+    private final static int DEFAULT_EXPIRE = 10;
 
 
     /**
@@ -39,7 +45,6 @@ public class SignatureUtil {
                                           Map<String, String> parameters) {
         String[] sortedKeys = parameters.keySet().toArray(new String[]{});
         Arrays.sort(sortedKeys);
-        final String SEPARATOR = "&";
 
         StringBuilder sbStringToSign = new StringBuilder();
         sbStringToSign.append(httpMethod).append("\n").append(path).append("\n");
@@ -50,7 +55,7 @@ public class SignatureUtil {
 
             for (String key : sortedKeys) {
                 if (count != 0) {
-                    sbStringToSign.append(SEPARATOR);
+                    sbStringToSign.append(StringUtils.SEPARATOR);
                 }
                 sbStringToSign.append(percentEncode(key)).append("=")
                         .append(percentEncode(parameters.get(key)));
@@ -66,7 +71,6 @@ public class SignatureUtil {
     }
 
     private static String calculateSignature(String key, String stringToSign) {
-        final String ALGORITHM = "HmacSHA256";
         byte[] signData = new byte[]{};
         try {
             Mac mac = Mac.getInstance(ALGORITHM);

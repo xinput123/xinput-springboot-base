@@ -102,7 +102,7 @@ public final class ErrorCode {
     @Remark("服务更新中")
     public static final int SERVER_UPDATE = 5300;
 
-    static final Hashtable<Integer, String> codeMsgMap = new Hashtable<>(
+    static final Hashtable<Integer, String> CODE_MSG_MAP = new Hashtable<>(
             20);
 
     static {
@@ -110,7 +110,7 @@ public final class ErrorCode {
         for (Field field : fields) {
             if (field.isAnnotationPresent(Remark.class)) {
                 try {
-                    codeMsgMap.put(field.getInt(null),
+                    CODE_MSG_MAP.put(field.getInt(null),
                             field.getAnnotation(Remark.class).value());
                 } catch (IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
@@ -120,8 +120,8 @@ public final class ErrorCode {
     }
 
     public static String getMsg(int responseCode) {
-        if (codeMsgMap.containsKey(responseCode)) {
-            return codeMsgMap.get(responseCode);
+        if (CODE_MSG_MAP.containsKey(responseCode)) {
+            return CODE_MSG_MAP.get(responseCode);
         }
         return "未知错误";
 

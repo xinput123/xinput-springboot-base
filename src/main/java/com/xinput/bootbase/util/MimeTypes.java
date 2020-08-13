@@ -117,11 +117,4 @@ public class MimeTypes {
         return mimetypes;
     }
 
-    public static void main(String[] args) {
-//        InputStream stream = MimeTypes.class.getClassLoader().getResourceAsStream("com/precisource/util/mime-types.properties");
-//        System.out.println(stream == null);
-
-        String contentType = MimeTypes.getContentType("2.jpeg");
-        System.out.println(contentType);
-    }
 }

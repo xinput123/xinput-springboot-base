@@ -13,7 +13,10 @@ import com.xinput.bootbase.util.JwtUtils;
 import com.xinput.bootbase.util.ObjectId;
 import com.xinput.bootbase.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -42,7 +45,8 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
-        if (request.getMethod().equals("OPTIONS")) {
+        HttpMethod.OPTIONS.toString();
+        if (HttpMethod.OPTIONS.toString().equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
         }
@@ -63,7 +67,7 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
     private void setHeader(HttpServletRequest request, HttpServletResponse response) {
         String requestId = (String) request.getAttribute(HeaderConsts.REQUEST_ID_KEY);
         if (StringUtils.isNotEmpty(requestId)) {
-            requestId = new StringBuffer(20).append(ObjectId.get().toString()).append("-").append(requestId).toString();
+            requestId = new StringBuilder(20).append(ObjectId.get().toString()).append("-").append(requestId).toString();
         } else {
             requestId = ObjectId.get().toString();
         }
@@ -77,22 +81,23 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
         }
 
         //set default content type
-        response.setContentType(HeaderConsts.DEFAULT_CONTENT_TYPE_KEY);
+        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
 
         // default content type without utf-8
-        if (response.getContentType().equalsIgnoreCase("application/json")) {
-            response.setContentType(HeaderConsts.DEFAULT_CONTENT_TYPE_KEY);
+        if (MediaType.APPLICATION_JSON_VALUE.equalsIgnoreCase(response.getContentType())) {
+            response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         }
 
         //set cors
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
         // set Access-Control-Expose-Headers
-        response.addHeader(HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_KEY, HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_VALUE);
+        response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HeaderConsts.ACCESS_CONTROL_EXPOSE_HEADERS_VALUE);
 
-        if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
-            response.setHeader(HeaderConsts.ACCESS_CONTROL_ALLOW_METHODS_KEY, HeaderConsts.ACCESS_CONTROL_ALLOW_METHODS_VALUE);
-            response.setHeader(HeaderConsts.ACCESS_CONTROL_MAX_AGE_KEY, HeaderConsts.ACCESS_CONTROL_MAX_AGE_VALUE);
+        if (HttpMethod.OPTIONS.toString().equalsIgnoreCase(request.getMethod())) {
+            // Access-Control-Allow-Methods
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, HeaderConsts.ACCESS_CONTROL_ALLOW_METHODS_VALUE);
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_MAX_AGE, HeaderConsts.ACCESS_CONTROL_MAX_AGE_VALUE);
         }
     }
 

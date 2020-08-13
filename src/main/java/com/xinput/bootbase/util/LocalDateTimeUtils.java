@@ -12,18 +12,18 @@ import java.util.Date;
  */
 public class LocalDateTimeUtils {
 
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DateUtils.DATE_TIME_FORMATTER_STRING);
 
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern(DateUtils.DATE_FORMATTER_STRING);
 
-    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final DateTimeFormatter TIME_FORMATTER = DateTimeFormatter.ofPattern(DateUtils.TIME_FORMATTER_STRING);
 
     /**
      * String -> LocalDateTime
      */
     public static LocalDateTime asLocalDate(String dateString) {
         try {
-            return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            return LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern(DateUtils.DATE_TIME_FORMATTER_STRING));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

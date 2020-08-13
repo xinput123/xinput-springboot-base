@@ -1,5 +1,6 @@
 package com.xinput.bootbase.util;
 
+import com.google.common.collect.Maps;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.metadata.HttpHeaders;
 import org.apache.tika.metadata.Metadata;
@@ -12,7 +13,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 /**
  * @author zanxus
@@ -21,7 +21,7 @@ import java.util.HashMap;
  */
 public class MimeTypeUtils {
 
-    private static final String defaultValue = "text/plain";
+    private static final String DEFAULT_VALUE = "text/plain";
 
     public static String getContentType(File file) {
         if (file.isDirectory()) {
@@ -29,7 +29,7 @@ public class MimeTypeUtils {
         }
 
         AutoDetectParser parser = new AutoDetectParser();
-        parser.setParsers(new HashMap<>());
+        parser.setParsers(Maps.newHashMap());
 
         Metadata metadata = new Metadata();
         metadata.add(Metadata.RESOURCE_NAME_KEY, file.getName());
@@ -41,7 +41,7 @@ public class MimeTypeUtils {
             stream.close();
         } catch (TikaException | SAXException | IOException e) {
 
-            return defaultValue;
+            return DEFAULT_VALUE;
         }
 
         return metadata.get(HttpHeaders.CONTENT_TYPE);

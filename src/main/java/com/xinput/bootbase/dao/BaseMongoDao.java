@@ -27,6 +27,8 @@ public abstract class BaseMongoDao<T> {
 
     /**
      * 注入mongodbTemplate
+     *
+     * @param mongoTemplate
      */
     protected abstract void setMongoTemplate(MongoTemplate mongoTemplate);
 

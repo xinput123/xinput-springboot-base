@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
 /**
  * @author zanxus
  * @version 1.0.0
- * @date 2018-04-18 14:57
  * @description
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})

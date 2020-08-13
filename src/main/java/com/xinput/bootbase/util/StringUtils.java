@@ -4,6 +4,9 @@ import com.xinput.bootbase.annotation.Remark;
 
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
+    @Remark("与字符串")
+    public static final String SEPARATOR = "&";
+
     @Remark("逗号")
     public static final String COMMA = ",";
 
@@ -17,7 +20,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static final String SLASH = "/";
 
     @Remark("手机号长度")
-    public static final int PHONE_length = 11;
+    public static final int PHONE_LENGTH = 11;
 
     @Remark("15位身份证号码长度")
     public static final int IDCARD_15_LENGTH = 15;

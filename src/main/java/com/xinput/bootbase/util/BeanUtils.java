@@ -4,7 +4,6 @@ import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Set;
@@ -16,9 +15,7 @@ import java.util.TreeSet;
  */
 public class BeanUtils {
 
-    private static final Logger logger = Logs.get();
-
-    private static final Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+    private static final Mapper MAPPER = DozerBeanMapperBuilder.buildDefault();
 
     /**
      * List  实体类 转换器
@@ -35,7 +32,7 @@ public class BeanUtils {
         }
 
         List<T> list = Lists.newArrayListWithCapacity(source.size());
-        source.forEach(s -> list.add(mapper.map(s, clz)));
+        source.forEach(s -> list.add(MAPPER.map(s, clz)));
 
         return list;
     }
@@ -55,7 +52,7 @@ public class BeanUtils {
         }
         Set<T> set = new TreeSet<>();
         for (S s : source) {
-            set.add(mapper.map(s, clz));
+            set.add(MAPPER.map(s, clz));
         }
         return set;
     }
@@ -73,15 +70,15 @@ public class BeanUtils {
         if (source == null) {
             return null;
         }
-        return mapper.map(source, clz);
+        return MAPPER.map(source, clz);
     }
 
     public static void convertor(Object source, Object object) {
-        mapper.map(source, object);
+        MAPPER.map(source, object);
     }
 
     public static <T> void copyConvertor(T source, Object object) {
-        mapper.map(source, object);
+        MAPPER.map(source, object);
     }
 
 }

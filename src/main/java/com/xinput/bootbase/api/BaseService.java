@@ -2,7 +2,6 @@ package com.xinput.bootbase.api;
 
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.consts.ErrorCode;
-import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
@@ -14,6 +13,7 @@ import com.xinput.bootbase.util.TimeUtils;
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public abstract class BaseService {
 
     private static final String ATTACHMENT_DISPOSITION_TYPE = "attachment";
 
-    private static final URLCodec encoder = new URLCodec();
+    private static final URLCodec ENCODER = new URLCodec();
 
     @Autowired
     private ThreadLocal<BaseHttp> baseHttpThreadLocal;
@@ -47,7 +47,7 @@ public abstract class BaseService {
      * @param jwt
      * @param duration like 2h, 3d
      */
-    protected void setJWTCookie(String jwt, String duration) {
+    protected void setJwtCookie(String jwt, String duration) {
         Cookie cookie = new Cookie(DefaultConfig.getCookieTokenName(), jwt);
         cookie.setPath(StringUtils.SLASH);
         cookie.setSecure(DefaultConfig.getCookieSecure());
@@ -97,7 +97,7 @@ public abstract class BaseService {
         }
 
         try {
-            if (StringUtils.isEmpty(response.getHeader(HeaderConsts.CONTENT_DISPOSITION_KEY))) {
+            if (StringUtils.isEmpty(response.getHeader(HttpHeaders.CONTENT_DISPOSITION))) {
                 addContentDispositionHeader(response, name, inline);
             }
             if (file != null) {
@@ -151,14 +151,14 @@ public abstract class BaseService {
 
     private void addContentDispositionHeader(HttpServletResponse response, String name, boolean inline) throws UnsupportedEncodingException {
         if (name == null) {
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, dispositionType(inline));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, dispositionType(inline));
         } else if (canAsciiEncode(name)) {
             String contentDisposition = "%s; filename=\"%s\"";
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, String.format(contentDisposition, dispositionType(inline), name));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), name));
         } else {
             String encoding = response.getCharacterEncoding();
             String contentDisposition = "%1$s; filename*=" + encoding + "''%2$s; filename=\"%2$s\"";
-            response.setHeader(HeaderConsts.CONTENT_DISPOSITION_KEY, String.format(contentDisposition, dispositionType(inline), encoder.encode(name, encoding)));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), ENCODER.encode(name, encoding)));
         }
     }
 

@@ -14,6 +14,12 @@ import java.util.Date;
  */
 public class DateUtils extends DateFormatUtils {
 
+    public static final String DATE_TIME_FORMATTER_STRING = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String DATE_FORMATTER_STRING = "yyyy-MM-dd";
+
+    public static final String TIME_FORMATTER_STRING = "HH:mm:ss";
+
     /**
      * LocalDate -> Date
      */

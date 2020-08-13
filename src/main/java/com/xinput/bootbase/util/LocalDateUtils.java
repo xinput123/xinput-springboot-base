@@ -21,7 +21,7 @@ public class LocalDateUtils {
      * String -> LocalDate
      */
     public static LocalDate asLocalDate(String dateString) {
-        return LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return LocalDate.parse(dateString, DateTimeFormatter.ofPattern(DateUtils.DATE_FORMATTER_STRING));
     }
 
     /**

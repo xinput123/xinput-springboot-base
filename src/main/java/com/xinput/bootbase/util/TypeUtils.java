@@ -39,7 +39,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author wenshao
  */
 public class TypeUtils {
-    public static final String DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+//    public static final String DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public static final String castToString(Object value) {
         if (value == null) {
@@ -223,12 +223,12 @@ public class TypeUtils {
 
             if (strVal.indexOf('-') != -1) {
                 String format;
-                if (strVal.length() == DEFFAULT_DATE_FORMAT.length()) {
-                    format = DEFFAULT_DATE_FORMAT;
+                if (DateUtils.DATE_TIME_FORMATTER_STRING.length() == strVal.length()) {
+                    format = DateUtils.DATE_TIME_FORMATTER_STRING;
                 } else if (strVal.length() == 10) {
-                    format = "yyyy-MM-dd";
-                } else if (strVal.length() == "yyyy-MM-dd HH:mm:ss".length()) {
-                    format = "yyyy-MM-dd HH:mm:ss";
+                    format = DateUtils.DATE_FORMATTER_STRING;
+                } else if (DateUtils.DATE_TIME_FORMATTER_STRING.length() == strVal.length()) {
+                    format = DateUtils.DATE_TIME_FORMATTER_STRING;
                 } else {
                     format = "yyyy-MM-dd HH:mm:ss.SSS";
                 }
@@ -582,19 +582,16 @@ public class TypeUtils {
             return Array.newInstance(componentType, 0).getClass();
         }
 
-        if ((className.length() > 0 && className.charAt(0) == 'L')
-                && className.endsWith(";")) {
+        boolean newClass = (className.length() > 0 && className.charAt(0) == 'L') && className.endsWith(StringUtils.SEMICOLON);
+        if (newClass) {
             String newClassName = className
                     .substring(1, className.length() - 1);
             return loadClass(newClassName);
         }
 
         try {
-            clazz = Thread.currentThread().getContextClassLoader()
-                    .loadClass(className);
-
+            clazz = Thread.currentThread().getContextClassLoader().loadClass(className);
             addClassMapping(className, clazz);
-
             return clazz;
         } catch (Throwable e) {
             // skip
@@ -602,9 +599,7 @@ public class TypeUtils {
 
         try {
             clazz = Class.forName(className);
-
             addClassMapping(className, clazz);
-
             return clazz;
         } catch (Throwable e) {
             // skip

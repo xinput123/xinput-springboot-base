@@ -47,7 +47,7 @@ public class JwtUtils {
         // expires claim. In this case the token expires in 60 * 60 seconds
         final long exp = iat + Long.valueOf(DefaultConfig.getTokenExp());
         final JWTSigner signer = new JWTSigner(DefaultConfig.getApiSecureKey());
-        HashMap<String, Object> signClaims = new HashMap<>();
+        HashMap<String, Object> signClaims = Maps.newHashMap();
         signClaims.put("aud", aud);
         signClaims.put("platform", platform);
         signClaims.put("exp", exp);
