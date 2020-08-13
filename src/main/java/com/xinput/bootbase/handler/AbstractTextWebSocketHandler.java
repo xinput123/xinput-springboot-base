@@ -4,12 +4,12 @@ import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
 import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.domain.WssManager;
+import com.xinput.bootbase.util.HttpUtils;
 import com.xinput.bootbase.util.JwtUtils;
 import com.xinput.bootbase.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
@@ -38,37 +38,31 @@ public abstract class AbstractTextWebSocketHandler extends TextWebSocketHandler 
             return;
         }
 
-        Object token = session.getAttributes().get(TOKEN_FIELD);
+        Map<String, String> paramMap = HttpUtils.decodeParamHashMap(session.getUri().toString());
+        String token = paramMap.getOrDefault("token", StringUtils.EMPTY);
         if (Objects.isNull(token)) {
             logger.error("非测试环境，webSocket连接必须带有token属性");
             throw new RuntimeException("长连接没有token");
         }
 
-        final Map<String, Object> claims = JwtUtils.verify(String.valueOf(token));
-        String userId = String.valueOf(claims.getOrDefault("aud", StringUtils.EMPTY));
-        // 用户连接成功,缓存用户会话
-        logger.debug("用户[ {} ]创建连接", token);
-        session.getAttributes().put("userId", userId);
-        WssManager.add(userId, session);
+        final Map<String, Object> claims = JwtUtils.verify(token);
+        String userId = String.valueOf(claims.getOrDefault(JwtUtils.AUD, StringUtils.EMPTY));
+        String platform = String.valueOf(claims.getOrDefault(JwtUtils.PLATFORM, BaseConsts.DEFAULT));
+        if (logger.isDebugEnabled()) {
+            // 用户连接成功,缓存用户会话
+            logger.debug("用户[ {} ]创建连接", token);
+        }
+        session.getAttributes().put(JwtUtils.AUD, userId);
+        session.getAttributes().put(JwtUtils.PLATFORM, platform);
+        WssManager.add(platform + "-" + userId, session);
     }
-
-    @Override
-    protected abstract void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception;
-
-    /**
-     * 接收客户端消息
-     * handleTextMessage() 方法是在客户端向服务端发送文本消息的时候触发，
-     * 等价于 socket 的原生注解 @OnMessage 。Spring 封装的还有 handleMessage() 方法，
-     * 所有客户端发送消息都会触发该方法，无论什么类型的数据。
-     */
-//    @Override
-//    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-//        // 读取客户端消息
-//    }
 
     /**
      * afterConnectionClosed() 方法是在客户端(请求)断开连接的时候触发，
      * 等价于 socket 的原生注解 @OnClose
+     * <p>
+     * 关闭连接后或者发生传输错误时将会调用该方法，尽管会话session可能此时仍然未关闭，
+     * 但是不建议在此处给客户端发消息，因为极有可能会发送失败
      *
      * @param session
      * @param status
@@ -81,15 +75,18 @@ public abstract class AbstractTextWebSocketHandler extends TextWebSocketHandler 
                 logger.debug("用户 [{}] 断开连接", DefaultConfig.getMockUserId());
             }
             WssManager.remove(DefaultConfig.getMockUserId());
+            session.close();
             return;
         }
 
-        Object userId = session.getAttributes().get(TOKEN_FIELD);
+        Object userId = session.getAttributes().get(JwtUtils.AUD);
+        Object platform = session.getAttributes().getOrDefault(JwtUtils.PLATFORM, BaseConsts.DEFAULT);
         if (Objects.nonNull(userId)) {
             if (logger.isDebugEnabled()) {
                 logger.debug("用户 [{}] 断开连接", userId);
             }
-            WssManager.remove(String.valueOf(userId));
+            WssManager.remove(platform + "-" + userId);
         }
+        session.close();
     }
 }

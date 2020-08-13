@@ -50,7 +50,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
 
         // 获取请求参数
         Map<String, String> paramMap = HttpUtils.decodeParamHashMap(urlQuery);
-        String token = paramMap.get(TOKEN_FIELD);
+        String token = paramMap.getOrDefault(TOKEN_FIELD, StringUtils.EMPTY);
         if (StringUtils.isNullOrEmpty(token)) {
             logger.error("token is empty.");
             return false;

@@ -37,7 +37,7 @@ public class BaseConsts {
     /**
      * 默认模式
      */
-    public static final String MODE_ACTIVE_DEFAULT = "default";
+    public static final String DEFAULT = "default";
 
     /**
      * 开发模式

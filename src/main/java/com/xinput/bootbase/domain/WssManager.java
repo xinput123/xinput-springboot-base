@@ -3,6 +3,7 @@ package com.xinput.bootbase.domain;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
 import com.xinput.bootbase.consts.BaseConsts;
+import com.xinput.bootbase.util.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.WebSocketSession;
@@ -77,7 +78,7 @@ public class WssManager {
             return DefaultConfig.getMockUserId();
         }
 
-        Object obj = session.getAttributes().get("userId");
+        Object obj = session.getAttributes().get(JwtUtils.AUD);
         if (obj != null) {
             return String.valueOf(obj);
         }

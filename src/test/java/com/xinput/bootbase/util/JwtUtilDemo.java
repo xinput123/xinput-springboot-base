@@ -23,11 +23,11 @@ public class JwtUtilDemo {
         String token = JwtUtils.sign("123");
         System.out.println("token : " + token);
 
-        Map<String, Object> map = JwtUtils.verify(token);
-        System.out.println("token 解析结果：");
-        map.forEach((k, v) -> {
-            System.out.println(k + " = " + v);
-        });
+//        Map<String, Object> map = JwtUtils.verify(token);
+//        System.out.println("token 解析结果：");
+//        map.forEach((k, v) -> {
+//            System.out.println(k + " = " + v);
+//        });
     }
 
     @Test

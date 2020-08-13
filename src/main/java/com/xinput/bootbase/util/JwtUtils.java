@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 import com.google.common.collect.Maps;
 import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.consts.BaseConsts;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -19,12 +20,20 @@ import java.util.Map;
  */
 public class JwtUtils {
 
+    public static final String AUD = "aud";
+
+    public static final String PLATFORM = "platform";
+
+    public static final String EXP = "exp";
+
+    public static final String IAT = "iat";
+
     public static String sign(String aud) {
-        return sign(aud, Maps.newHashMap());
+        return sign(aud, BaseConsts.DEFAULT);
     }
 
     public static String sign(Object aud) {
-        return sign(aud, Maps.newHashMap());
+        return sign(aud, BaseConsts.DEFAULT);
     }
 
     public static String sign(Object aud, String platform) {
@@ -48,10 +57,10 @@ public class JwtUtils {
         final long exp = iat + Long.valueOf(DefaultConfig.getTokenExp());
         final JWTSigner signer = new JWTSigner(DefaultConfig.getApiSecureKey());
         HashMap<String, Object> signClaims = Maps.newHashMap();
-        signClaims.put("aud", aud);
-        signClaims.put("platform", platform);
-        signClaims.put("exp", exp);
-        signClaims.put("iat", iat);
+        signClaims.put(AUD, aud);
+        signClaims.put(PLATFORM, platform);
+        signClaims.put(EXP, exp);
+        signClaims.put(IAT, iat);
         signClaims.putAll(claims);
         final String jwt = signer.sign(signClaims);
         return jwt;
