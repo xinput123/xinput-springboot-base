@@ -58,6 +58,10 @@ public class WssManager {
         }
     }
 
+    public static ConcurrentHashMap<String, WebSocketSession> getAll() {
+        return webSocketSessionMap;
+    }
+
     /**
      * 获取 websocket 会话
      *

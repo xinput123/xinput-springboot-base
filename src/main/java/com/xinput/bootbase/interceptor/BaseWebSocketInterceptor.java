@@ -37,7 +37,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
     @Override
     public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
                                    WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-        String urlQuery = serverHttpRequest.getURI().getQuery();
+        String urlQuery = serverHttpRequest.getURI().toString();
         if (logger.isDebugEnabled()) {
             logger.debug("websocket starts handshaking. urlQuery:[{}].", urlQuery);
         }
