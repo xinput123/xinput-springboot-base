@@ -89,8 +89,8 @@ public class MimeTypes {
     public static boolean isValidMimeType(String mimeType) {
         if (mimeType == null) {
             return false;
-        } else if (mimeType.indexOf(";") != -1) {
-            return mimetypes().contains(mimeType.split(";")[0]);
+        } else if (mimeType.indexOf(StringUtils.SEMICOLON) != -1) {
+            return mimetypes().contains(mimeType.split(StringUtils.SEMICOLON)[0]);
         } else {
             return mimetypes().contains(mimeType);
         }

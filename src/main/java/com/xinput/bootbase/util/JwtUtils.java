@@ -6,6 +6,7 @@ import com.auth0.jwt.JWTVerifyException;
 import com.google.common.collect.Maps;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.consts.BaseConsts;
+import com.xinput.bootbase.domain.JwtToken;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -28,6 +29,8 @@ public class JwtUtils {
 
     public static final String IAT = "iat";
 
+    public static final String TOKEN = "token";
+
     public static String sign(String aud) {
         return sign(aud, BaseConsts.DEFAULT);
     }
@@ -41,7 +44,7 @@ public class JwtUtils {
     }
 
     public static String sign(Object aud, Map<String, Object> claims) {
-        return sign(aud, "default", claims);
+        return sign(aud, BaseConsts.DEFAULT, claims);
     }
 
     /**
@@ -72,4 +75,8 @@ public class JwtUtils {
         return claims;
     }
 
+    public static JwtToken verifyJwtToken(String jwt) throws SignatureException, NoSuchAlgorithmException, JWTVerifyException, InvalidKeyException, IOException {
+        final Map<String, Object> claims = verify(jwt);
+        return BeanUtils.convertor(claims, JwtToken.class);
+    }
 }

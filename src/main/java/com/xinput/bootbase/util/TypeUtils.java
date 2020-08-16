@@ -450,10 +450,6 @@ public class TypeUtils {
             return (T) castToByte(obj);
         }
 
-        // if (clazz == char.class || clazz == Character.class) {
-        // return (T) castToCharacter(obj);
-        // }
-
         if (clazz == short.class || clazz == Short.class) {
             return (T) castToShort(obj);
         }

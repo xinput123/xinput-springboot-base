@@ -13,22 +13,11 @@
 
     <groupId>com.github.xinput123</groupId>
     <artifactId>xinput-springboot-base</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
 
     <name>xinput-springboot-base</name>
     <description>springboot的一个基本封装</description>
     <url>https://github.com/xinput123/xinput-springboot-base</url>
-
-    <developers>
-        <developer>
-            <name>xinput</name>
-            <email>xinput.xx@gmail.com</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+8</timezone>
-        </developer>
-    </developers>
 
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -234,6 +223,17 @@
         </dependency>
     </dependencies>
 
+    <developers>
+        <developer>
+            <name>xinput</name>
+            <email>xinput.xx@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>Github Issue</system>
         <url>https://github.com/xinput123/xinput-springboot-base/issues</url>
@@ -330,13 +330,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
-                    <!--Release -->
-                    <!--                    <plugin>-->
-                    <!--                        <groupId>org.apache.maven.plugins</groupId>-->
-                    <!--                        <artifactId>maven-release-plugin</artifactId>-->
-                    <!--                        <version>2.5.3</version>-->
-                    <!--                    </plugin>-->
 
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>

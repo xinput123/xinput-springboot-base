@@ -4,6 +4,7 @@ import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.JWTVerifyException;
 import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.domain.JwtToken;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -73,4 +74,14 @@ public class JwtUtilDemo {
         final Map<String, Object> claims = verifier.verify(jwt);
         return claims;
     }
+
+    @Test
+    public void jwtToken() throws NoSuchAlgorithmException, SignatureException, JWTVerifyException, InvalidKeyException, IOException {
+        String token = JwtUtils.sign("123567");
+        JwtToken jwtToken = JwtUtils.verifyJwtToken(token);
+        System.out.println(JsonUtils.toJsonString(jwtToken, true));
+
+        JwtUtils.verifyJwtToken("");
+    }
+
 }

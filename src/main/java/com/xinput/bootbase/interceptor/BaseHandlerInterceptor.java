@@ -7,6 +7,7 @@ import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.consts.ErrorCode;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
+import com.xinput.bootbase.domain.JwtToken;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
 import com.xinput.bootbase.util.JwtUtils;
@@ -25,7 +26,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
-import java.util.Map;
 
 /**
  * 定义拦截器
@@ -143,9 +143,8 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
         }
 
         try {
-            final Map<String, Object> claims = JwtUtils.verify(token);
-            String aud = String.valueOf(claims.get("aud"));
-            request.setAttribute("aud", aud);
+            final JwtToken jwtToken = JwtUtils.verifyJwtToken(token);
+            request.setAttribute(JwtUtils.AUD, jwtToken.getAud());
         } catch (JWTExpiredException e) {
             result.setCodeWithDefaultMsg(ErrorCode.CLIENT_AUTH_TOKEN_EXPIRED);
             unauthorized(result);

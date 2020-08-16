@@ -1,17 +1,25 @@
 package com.xinput.bootbase.interceptor;
 
+import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
 import com.xinput.bootbase.consts.BaseConsts;
-import com.xinput.bootbase.util.HttpUtils;
+import com.xinput.bootbase.consts.HeaderConsts;
+import com.xinput.bootbase.domain.JwtToken;
+import com.xinput.bootbase.domain.WssManager;
+import com.xinput.bootbase.util.JwtUtils;
+import com.xinput.bootbase.util.ObjectId;
 import com.xinput.bootbase.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -22,41 +30,54 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseWebSocketInterceptor.class);
 
-    private static final String TOKEN_FIELD = "token";
-
     /**
-     * websocket 握手之前
-     *
-     * @param serverHttpRequest
-     * @param serverHttpResponse
-     * @param webSocketHandler
-     * @param map
-     * @return
-     * @throws Exception
+     * websocket 握手之前: 验证权限
      */
     @Override
-    public boolean beforeHandshake(ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,
-                                   WebSocketHandler webSocketHandler, Map<String, Object> map) throws Exception {
-        String urlQuery = serverHttpRequest.getURI().toString();
-        if (logger.isDebugEnabled()) {
-            logger.debug("websocket starts handshaking. urlQuery:[{}].", urlQuery);
-        }
+    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response,
+                                   WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
+        // 在这里决定是否允许链接,http协议转换websoket协议进行前, 握手前Url = {}
+        logger.info("websocket握手前URL = [{}].", request.getURI());
 
-        // 如果是dev环境，直接放行
-        if (BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {
-            logger.info("the mode is [dev]", urlQuery);
-            return true;
-        }
-
-        // 获取请求参数
-        Map<String, String> paramMap = HttpUtils.decodeParamHashMap(urlQuery);
-        String token = paramMap.getOrDefault(TOKEN_FIELD, StringUtils.EMPTY);
-        if (StringUtils.isNullOrEmpty(token)) {
-            logger.error("token is empty.");
+        if (!(request instanceof ServletServerHttpRequest)) {
+            logger.error("请求类型错误.request=[{}].", request.getClass().toString());
             return false;
         }
 
-        return true;
+        String requestIId = ObjectId.stringId();
+        String userId = DefaultConfig.getMockUserId();
+        String platform = BaseConsts.DEFAULT;
+
+        if (!BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {
+            HttpServletRequest httpRequest = ((ServletServerHttpRequest) request).getServletRequest();
+            String token = httpRequest.getParameter(JwtUtils.TOKEN);
+            if (StringUtils.isNullOrEmpty(token)) {
+                logger.error("请求参数缺失. URL = [{}].", request.getURI().toString());
+                return false;
+            }
+
+            try {
+                JwtToken jwtToken = JwtUtils.verifyJwtToken(token);
+                userId = jwtToken.getAud();
+                platform = jwtToken.getPlatform();
+            } catch (Exception e) {
+                logger.error("长连接解析权限验证失败. token:[{}].", token, e);
+                return false;
+            }
+        }
+
+        String sessionKey = platform + "-" + userId;
+        WebSocketSession webSocketSession = WssManager.get(sessionKey);
+        if (webSocketSession != null) {
+            logger.warn("userId:[{}],已经建立了长连接[{}].", webSocketSession.getAttributes().get(HeaderConsts.REQUEST_ID_KEY));
+            return false;
+        } else {
+            attributes.put(JwtUtils.AUD, userId);
+            attributes.put(JwtUtils.PLATFORM, platform);
+            attributes.put(HeaderConsts.REQUEST_ID_KEY, requestIId);
+            return true;
+        }
+
     }
 
     /**

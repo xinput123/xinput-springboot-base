@@ -56,7 +56,7 @@ public class JsonUtils {
         try {
             return mapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error("对象转json string 失败.", e);
             return null;
         }
     }
@@ -66,7 +66,7 @@ public class JsonUtils {
             try {
                 return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                logger.error("对象转json string 格式化失败.", e);
                 return null;
             }
         }

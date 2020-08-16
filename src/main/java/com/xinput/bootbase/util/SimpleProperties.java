@@ -37,6 +37,10 @@ public class SimpleProperties {
 
     private static ClassLoader defaultClassLoader;
 
+    private static final Pattern PATTERN = Pattern.compile("^%([a-zA-Z0-9_\\-]+)\\.(.*)$");
+
+    private static final Pattern PATTERN_2 = Pattern.compile("\\$\\{([^}]+)}");
+
     /**
      * The loaded configuration files
      */
@@ -89,9 +93,8 @@ public class SimpleProperties {
 
         // OK, check for instance specifics configuration
         Properties newConfiguration = new OrderSafeProperties();
-        Pattern pattern = Pattern.compile("^%([a-zA-Z0-9_\\-]+)\\.(.*)$");
         for (Object key : propsFromFile.keySet()) {
-            Matcher matcher = pattern.matcher(key + "");
+            Matcher matcher = PATTERN.matcher(key + "");
             if (!matcher.matches()) {
                 newConfiguration.put(key, propsFromFile.get(key).toString().trim());
             }
@@ -99,10 +102,9 @@ public class SimpleProperties {
 
         propsFromFile = newConfiguration;
         // Resolve ${..}
-        pattern = Pattern.compile("\\$\\{([^}]+)}");
         for (Object key : propsFromFile.keySet()) {
             String value = propsFromFile.getProperty(key.toString());
-            Matcher matcher = pattern.matcher(value);
+            Matcher matcher = PATTERN_2.matcher(value);
             StringBuffer newValue = new StringBuffer(100);
             while (matcher.find()) {
                 String jp = matcher.group(1);

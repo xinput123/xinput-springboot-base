@@ -1,12 +1,8 @@
 package com.xinput.bootbase.handler;
 
-import com.xinput.bootbase.config.DefaultConfig;
-import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.BaseConsts;
+import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.WssManager;
-import com.xinput.bootbase.util.HttpUtils;
 import com.xinput.bootbase.util.JwtUtils;
-import com.xinput.bootbase.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.socket.CloseStatus;
@@ -14,13 +10,10 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class AbstractTextWebSocketHandler extends TextWebSocketHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractTextWebSocketHandler.class);
-
-    protected static final String TOKEN_FIELD = "token";
 
     /**
      * 握手成功之后
@@ -33,60 +26,40 @@ public abstract class AbstractTextWebSocketHandler extends TextWebSocketHandler 
      */
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        if (BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {
-            WssManager.add(DefaultConfig.getMockUserId(), session);
-            return;
-        }
+        final Map<String, Object> attributes = session.getAttributes();
+        final Object userId = attributes.get(JwtUtils.AUD);
+        final Object platform = attributes.get(JwtUtils.PLATFORM);
+        final String sessionKey = platform + "-" + userId;
+        logger.info("用户[{}]在平台[{}]上建立了长连接[{}]", userId, platform, attributes.get(HeaderConsts.REQUEST_ID_KEY));
+        WssManager.add(sessionKey, session);
 
-        Map<String, String> paramMap = HttpUtils.decodeParamHashMap(session.getUri().toString());
-        String token = paramMap.getOrDefault("token", StringUtils.EMPTY);
-        if (Objects.isNull(token)) {
-            logger.error("非测试环境，webSocket连接必须带有token属性");
-            throw new RuntimeException("长连接没有token");
-        }
-
-        final Map<String, Object> claims = JwtUtils.verify(token);
-        String userId = String.valueOf(claims.getOrDefault(JwtUtils.AUD, StringUtils.EMPTY));
-        String platform = String.valueOf(claims.getOrDefault(JwtUtils.PLATFORM, BaseConsts.DEFAULT));
-        if (logger.isDebugEnabled()) {
-            // 用户连接成功,缓存用户会话
-            logger.debug("用户[ {} ]创建连接", token);
-        }
-        session.getAttributes().put(JwtUtils.AUD, userId);
-        session.getAttributes().put(JwtUtils.PLATFORM, platform);
-        WssManager.add(platform + "-" + userId, session);
+        // 可以在用户建立连接后，立刻推送未读消息，这里省略
     }
 
     /**
-     * afterConnectionClosed() 方法是在客户端(请求)断开连接的时候触发，
-     * 等价于 socket 的原生注解 @OnClose
-     * <p>
-     * 关闭连接后或者发生传输错误时将会调用该方法，尽管会话session可能此时仍然未关闭，
-     * 但是不建议在此处给客户端发消息，因为极有可能会发送失败
-     *
-     * @param session
-     * @param status
-     * @throws Exception
+     * 消息传输错误处理
+     */
+    @Override
+    public void handleTransportError(WebSocketSession session, Throwable throwable) throws Exception {
+        final Map<String, Object> attributes = session.getAttributes();
+        final Object userId = attributes.get(JwtUtils.AUD);
+        final Object platform = attributes.get(JwtUtils.PLATFORM);
+        final String sessionKey = platform + "-" + userId;
+        logger.error("用户[{}]在平台[{}]上的长连接[{}]消息传输发生错误.", userId, platform, attributes.get(HeaderConsts.REQUEST_ID_KEY), throwable);
+        // 移除并关闭Socket会话
+        WssManager.removeAndClose(sessionKey);
+    }
+
+    /**
+     * 关闭连接后
      */
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        if (BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("用户 [{}] 断开连接", DefaultConfig.getMockUserId());
-            }
-            WssManager.remove(DefaultConfig.getMockUserId());
-            session.close();
-            return;
-        }
-
-        Object userId = session.getAttributes().get(JwtUtils.AUD);
-        Object platform = session.getAttributes().getOrDefault(JwtUtils.PLATFORM, BaseConsts.DEFAULT);
-        if (Objects.nonNull(userId)) {
-            if (logger.isDebugEnabled()) {
-                logger.debug("用户 [{}] 断开连接", userId);
-            }
-            WssManager.remove(platform + "-" + userId);
-        }
-        session.close();
+        final Map<String, Object> attributes = session.getAttributes();
+        final Object userId = attributes.get(JwtUtils.AUD);
+        final Object platform = attributes.get(JwtUtils.PLATFORM);
+        final String sessionKey = platform + "-" + userId;
+        logger.error("用户[{}]在平台[{}]上关闭了长连接[{}].", userId, platform, attributes.get(HeaderConsts.REQUEST_ID_KEY));
+        WssManager.remove(sessionKey);
     }
 }

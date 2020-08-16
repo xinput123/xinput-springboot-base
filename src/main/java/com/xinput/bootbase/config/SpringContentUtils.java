@@ -1,5 +1,6 @@
 package com.xinput.bootbase.config;
 
+import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.util.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -59,7 +60,7 @@ public class SpringContentUtils implements ApplicationContextAware {
 
         String[] activeProfiles = context.getEnvironment().getActiveProfiles();
         if (activeProfiles == null || activeProfiles.length == 0) {
-            CURRENT_ACTIVE_PROFILE = "default";
+            CURRENT_ACTIVE_PROFILE = BaseConsts.DEFAULT;
         } else {
             CURRENT_ACTIVE_PROFILE = context.getEnvironment().getActiveProfiles()[0];
         }
