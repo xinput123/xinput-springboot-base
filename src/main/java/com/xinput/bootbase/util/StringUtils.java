@@ -62,4 +62,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static boolean isNotNullOrEmpty(String value) {
         return !isNullOrEmpty(value);
     }
+
+    public static boolean notEquals(final CharSequence cs1, final CharSequence cs2) {
+        return !equals(cs1, cs2);
+    }
+
+    public static boolean notEqualsIgnoreCase(final CharSequence cs1, final CharSequence cs2) {
+        return !equalsIgnoreCase(cs1, cs2);
+    }
+
 }

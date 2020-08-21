@@ -44,7 +44,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
             return false;
         }
 
-        String requestIId = ObjectId.stringId();
+        String requestId = ObjectId.stringId();
         String userId = DefaultConfig.getMockUserId();
         String platform = BaseConsts.DEFAULT;
 
@@ -74,7 +74,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
         } else {
             attributes.put(JwtUtils.AUD, userId);
             attributes.put(JwtUtils.PLATFORM, platform);
-            attributes.put(HeaderConsts.REQUEST_ID_KEY, requestIId);
+            attributes.put(HeaderConsts.REQUEST_ID_KEY, requestId);
             return true;
         }
 
