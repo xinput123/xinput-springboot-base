@@ -1,6 +1,6 @@
 package com.xinput.bootbase.interceptor;
 
-import com.auth0.jwt.JWTExpiredException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.xinput.bootbase.annotation.PassSecure;
 import com.xinput.bootbase.config.SpringContentUtils;
 import com.xinput.bootbase.consts.BaseConsts;
@@ -145,7 +145,7 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
         try {
             final JwtToken jwtToken = JwtUtils.verifyJwtToken(token);
             request.setAttribute(JwtUtils.AUD, jwtToken.getAud());
-        } catch (JWTExpiredException e) {
+        } catch (TokenExpiredException e) {
             result.setCodeWithDefaultMsg(ErrorCode.CLIENT_AUTH_TOKEN_EXPIRED);
             unauthorized(result);
             return;

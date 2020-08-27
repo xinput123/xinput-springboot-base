@@ -176,4 +176,12 @@ public class StreamUtils {
                 .collect(Collectors.joining(delimiter, prefix, suffix));
     }
 
+    /**
+     * 根据条件筛选filter
+     */
+    public static <R> List<R> filter(Collection<R> collection, Predicate<R> predicate) {
+        return collection.stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
 }

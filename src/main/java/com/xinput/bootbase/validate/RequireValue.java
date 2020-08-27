@@ -1,5 +1,7 @@
 package com.xinput.bootbase.validate;
 
+import com.xinput.bootbase.util.StringUtils;
+
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -21,8 +23,8 @@ import java.util.Arrays;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = Value.Check.class)
-public @interface Value {
+@Constraint(validatedBy = RequireValue.Check.class)
+public @interface RequireValue {
     String message();
 
     Class<?>[] groups() default {};
@@ -31,19 +33,19 @@ public @interface Value {
 
     String[] value();
 
-    class Check implements ConstraintValidator<Value, Object> {
+    class Check implements ConstraintValidator<RequireValue, Object> {
 
         private String[] values;
 
         @Override
-        public void initialize(Value value) {
+        public void initialize(RequireValue value) {
             values = value.value();
         }
 
         @Override
         public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || value.toString().length() == 0) {
-                return true;
+            if (value == null || StringUtils.isNullOrEmpty(String.valueOf(value))) {
+                return false;
             }
             return Arrays.asList(values).contains(value);
         }

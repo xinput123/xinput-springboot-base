@@ -21,8 +21,8 @@ import java.lang.invoke.MethodHandles;
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Constraint(validatedBy = Range.Check.class)
-public @interface Range {
+@Constraint(validatedBy = RequireRange.Check.class)
+public @interface RequireRange {
 
     String message();
 
@@ -40,7 +40,7 @@ public @interface Range {
      */
     double max() default Double.MAX_VALUE;
 
-    class Check implements ConstraintValidator<Range, Object> {
+    class Check implements ConstraintValidator<RequireRange, Object> {
 
         private static final Log LOG = LoggerFactory.make(MethodHandles.lookup());
 
@@ -49,7 +49,7 @@ public @interface Range {
         private double max;
 
         @Override
-        public void initialize(Range constraintAnnotation) {
+        public void initialize(RequireRange constraintAnnotation) {
             min = constraintAnnotation.min();
             max = constraintAnnotation.max();
             validateParameters();
@@ -58,7 +58,7 @@ public @interface Range {
         @Override
         public boolean isValid(Object value, ConstraintValidatorContext context) {
             if (value == null) {
-                return true;
+                return false;
             }
 
             if (value instanceof String) {
