@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * 跳过token验证
  *
- * @Author: xinput
- * @Date: 2020-06-15 18:27
+ * @author xinput
+ * @date 2020-06-15 18:27
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

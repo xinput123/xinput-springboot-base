@@ -4,8 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-15 14:12
+ * @author xinput
+ * @date 2020-06-15 14:12
  */
 public class BaseHttp {
 

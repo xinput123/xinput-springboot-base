@@ -1,6 +1,6 @@
 package com.xinput.bootbase.config;
 
-import com.xinput.bootbase.consts.BaseConsts;
+import com.xinput.bleach.consts.BaseConsts;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;

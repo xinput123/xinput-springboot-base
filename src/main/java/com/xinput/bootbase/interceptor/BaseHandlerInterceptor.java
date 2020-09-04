@@ -1,9 +1,11 @@
 package com.xinput.bootbase.interceptor;
 
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.xinput.bleach.consts.BaseConsts;
+import com.xinput.bleach.util.ObjectId;
+import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.annotation.PassSecure;
 import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.consts.ErrorCode;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
@@ -11,8 +13,6 @@ import com.xinput.bootbase.domain.JwtToken;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
 import com.xinput.bootbase.util.JwtUtils;
-import com.xinput.bootbase.util.ObjectId;
-import com.xinput.bootbase.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,8 +31,8 @@ import java.lang.reflect.Method;
  * 定义拦截器
  * 对请求添加requestId，方便追踪
  *
- * @Author: xinput
- * @Date: 2020-06-09 22:44
+ * @author xinput
+ * @date 2020-06-09 22:44
  */
 @Component
 public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
@@ -61,8 +61,8 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
     /**
      * 统一设置header参数
      *
-     * @param request
-     * @param response
+     * @param request  request
+     * @param response response
      */
     private void setHeader(HttpServletRequest request, HttpServletResponse response) {
         String requestId = (String) request.getAttribute(HeaderConsts.REQUEST_ID_KEY);
@@ -104,8 +104,8 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
     /**
      * 验证token
      *
-     * @param request
-     * @param object
+     * @param request request
+     * @param object  object
      */
     private void securtJwt(HttpServletRequest request, Object object) {
         // 如果不是映射到方法直接放行
@@ -165,11 +165,11 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
     /**
      * 请求处理之后进行调用，但是在视图被渲染之前（Controller方法调用之后），如果异常发生，则该方法不会被调用,所以需要全局异常捕获中清理 session
      *
-     * @param request
-     * @param response
-     * @param handler
-     * @param modelAndView
-     * @throws Exception
+     * @param request      object
+     * @param response     response
+     * @param handler      handler
+     * @param modelAndView modelAndView
+     * @throws Exception Exception
      */
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

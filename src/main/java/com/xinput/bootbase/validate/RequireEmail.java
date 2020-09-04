@@ -1,6 +1,6 @@
 package com.xinput.bootbase.validate;
 
-import com.xinput.bootbase.util.StringUtils;
+import com.xinput.bleach.util.StringUtils;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;

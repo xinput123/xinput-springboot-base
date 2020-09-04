@@ -3,8 +3,8 @@ package com.xinput.bootbase.model;
 /**
  * 基础筛选条件
  *
- * @Author: xinput
- * @Date: 2020-06-20 12:22
+ * @author xinput
+ * @date 2020-06-20 12:22
  */
 public class BaseCondition {
 

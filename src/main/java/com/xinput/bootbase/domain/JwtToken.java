@@ -1,8 +1,8 @@
 package com.xinput.bootbase.domain;
 
 /**
- * @author: xinput
- * @date: 2020-08-14 11:36
+ * @author xinput
+ * @date 2020-08-14 11:36
  */
 public class JwtToken {
 

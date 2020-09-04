@@ -1,5 +1,7 @@
 package com.xinput.bootbase.util;
 
+import com.xinput.bleach.util.JsonUtils;
+import com.xinput.bleach.util.Logs;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.domain.WechatUserInfo;
 import org.apache.http.client.ClientProtocolException;
@@ -39,9 +41,4 @@ public class WechatUtils {
         return authInfo;
     }
 
-    public static void main(String[] args) {
-        String code = "033s42zG07ilfg2jJqxG0xGezG0s42zp";
-        WechatUserInfo userInfo = WechatUtils.code2Session(code);
-        System.out.println(JsonUtils.toJsonString(userInfo));
-    }
 }

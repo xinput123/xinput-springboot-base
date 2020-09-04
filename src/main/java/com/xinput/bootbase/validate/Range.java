@@ -15,8 +15,8 @@ import java.lang.annotation.Target;
 import java.lang.invoke.MethodHandles;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-20 18:21
+ * @author xinput
+ * @date 2020-06-20 18:21
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

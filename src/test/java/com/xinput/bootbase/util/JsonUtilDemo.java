@@ -1,11 +1,13 @@
 package com.xinput.bootbase.util;
 
+import com.xinput.bleach.util.BuilderUtils;
+import com.xinput.bleach.util.JsonUtils;
 import com.xinput.bootbase.domain.Student;
 import org.junit.Test;
 
 /**
- * @Author: xinput
- * @Date: 2020-08-06 14:06
+ * @author xinput
+ * @date 2020-08-06 14:06
  */
 public class JsonUtilDemo {
 

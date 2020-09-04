@@ -3,8 +3,8 @@ package com.xinput.bootbase.domain;
 /**
  * http header中信息
  *
- * @Author: xinput
- * @Date: 2020-06-09 21:53
+ * @author xinput
+ * @date 2020-06-09 21:53
  */
 public class Header {
 

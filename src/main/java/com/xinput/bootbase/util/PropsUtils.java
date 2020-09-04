@@ -1,5 +1,6 @@
 package com.xinput.bootbase.util;
 
+import com.xinput.bleach.util.CastUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,7 +10,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * @Author: xinput
+ * @author xinput
  * 属性文件工具类
  */
 public class PropsUtils {

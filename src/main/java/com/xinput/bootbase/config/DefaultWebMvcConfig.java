@@ -28,8 +28,8 @@ import java.util.List;
 import java.util.TimeZone;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-18 15:18
+ * @author xinput
+ * @date 2020-06-18 15:18
  */
 @Configuration
 @EnableWebMvc

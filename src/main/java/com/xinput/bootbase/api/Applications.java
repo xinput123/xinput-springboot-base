@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-18 22:03
+ * @author xinput
+ * @date 2020-06-18 22:03
  */
 @RestController
 public class Applications {

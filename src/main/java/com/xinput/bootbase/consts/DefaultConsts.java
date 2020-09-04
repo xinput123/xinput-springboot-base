@@ -3,8 +3,8 @@ package com.xinput.bootbase.consts;
 /**
  * System.properties中的属性
  *
- * @Author: xinput
- * @Date: 2020-06-10 21:48
+ * @author xinput
+ * @date 2020-06-10 21:48
  */
 public class DefaultConsts {
 

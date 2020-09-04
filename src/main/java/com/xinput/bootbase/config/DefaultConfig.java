@@ -1,16 +1,16 @@
 package com.xinput.bootbase.config;
 
 import com.google.common.collect.Lists;
+import com.xinput.bleach.util.SimpleProperties;
+import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.consts.DefaultConsts;
-import com.xinput.bootbase.util.SimpleProperties;
-import com.xinput.bootbase.util.StringUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.List;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-21 09:46
+ * @author xinput
+ * @date 2020-06-21 09:46
  */
 public class DefaultConfig {
 

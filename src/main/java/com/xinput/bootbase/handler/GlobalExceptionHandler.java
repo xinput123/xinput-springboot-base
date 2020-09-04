@@ -1,13 +1,13 @@
 package com.xinput.bootbase.handler;
 
+import com.xinput.bleach.util.BuilderUtils;
+import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.consts.ErrorCode;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
 import com.xinput.bootbase.exception.BaseFileException;
 import com.xinput.bootbase.exception.BaseUnexpectedException;
-import com.xinput.bootbase.util.BuilderUtils;
-import com.xinput.bootbase.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,10 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
- * 全局异常捕获
+ * Global Exception
  *
- * @Author: xinput
- * @Date: 2020-06-06 14:32
+ * @author xinput
+ * @date 2020-06-06 14:32
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,11 +40,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 参数类型验证错误，http返回状态默认400
-     *
-     * @param req
-     * @param resp
-     * @param e
-     * @return
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity<Result> constraintViolationExceptionHandler(HttpServletRequest req, HttpServletResponse resp, ConstraintViolationException e) {
@@ -64,11 +59,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 方法内参数验证异常
-     *
-     * @param req
-     * @param resp
-     * @param e
-     * @return
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Result> methodArgumentNotValidException(HttpServletRequest req, HttpServletResponse resp, MethodArgumentNotValidException e) {
@@ -87,9 +77,6 @@ public class GlobalExceptionHandler {
     /**
      * 调用方在以post json方式请求服务时，没有对参数进行json序列化所抛出的异常
      * 即： Controller中的方法有 @ResponseBody 参数验证时，如果传入的是个空数据则会抛出这个异常
-     *
-     * @param e
-     * @return
      */
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public ResponseEntity<Result> httpMessageNotReadableExceptionHandler(HttpServletRequest req, HttpServletResponse resp, HttpMessageNotReadableException e) {
@@ -108,11 +95,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 空指针异常
-     *
-     * @param req
-     * @param resp
-     * @param npe
-     * @return
      */
     @ExceptionHandler(value = NullPointerException.class)
     public ResponseEntity<Result> constraintViolationExceptionHandler(HttpServletRequest req, HttpServletResponse resp, NullPointerException npe) {
@@ -139,11 +121,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 自己封装的基础异常
-     *
-     * @param req
-     * @param resp
-     * @param be   封装的异常
-     * @return
      */
     @ExceptionHandler(value = BaseException.class)
     public ResponseEntity<Result> baseExceptionHandler(HttpServletRequest req, HttpServletResponse resp, BaseException be) {
@@ -182,10 +159,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 所有Exception的异常
-     *
-     * @param req
-     * @param e
-     * @return
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Result> exceptionHandler(HttpServletRequest req, Exception e) {
@@ -195,10 +168,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 所有Error的异常
-     *
-     * @param req
-     * @param error
-     * @return
      */
     @ExceptionHandler(value = Error.class)
     public ResponseEntity<Result> errorHandler(HttpServletRequest req, Error error) {
@@ -208,10 +177,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 最高等级的Throwable异常
-     *
-     * @param req
-     * @param throwable
-     * @return
      */
     @ExceptionHandler(value = Throwable.class)
     public ResponseEntity<Result> throwableHandler(HttpServletRequest req, Throwable throwable) {
@@ -231,8 +196,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 资源释放
-     *
-     * @param req
      */
     private void clear(HttpServletRequest req) {
         if (req != null && req.getSession() != null) {

@@ -7,8 +7,8 @@ import javax.annotation.PreDestroy;
 import java.time.LocalDateTime;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-05 10:41
+ * @author xinput
+ * @date 2020-06-05 10:41
  */
 public class TerminateBean {
 

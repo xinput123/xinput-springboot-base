@@ -3,8 +3,8 @@ package com.xinput.bootbase.exception;
 import org.springframework.http.HttpStatus;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-06 22:50
+ * @author xinput
+ * @date 2020-06-06 22:50
  */
 public class BaseException extends RuntimeException {
 

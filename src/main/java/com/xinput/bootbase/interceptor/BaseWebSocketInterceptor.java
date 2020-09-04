@@ -1,14 +1,14 @@
 package com.xinput.bootbase.interceptor;
 
+import com.xinput.bleach.consts.BaseConsts;
+import com.xinput.bleach.util.ObjectId;
+import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.JwtToken;
 import com.xinput.bootbase.domain.WssManager;
 import com.xinput.bootbase.util.JwtUtils;
-import com.xinput.bootbase.util.ObjectId;
-import com.xinput.bootbase.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.server.ServerHttpRequest;
@@ -52,7 +52,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
             HttpServletRequest httpRequest = ((ServletServerHttpRequest) request).getServletRequest();
             String token = httpRequest.getParameter(JwtUtils.TOKEN);
             if (StringUtils.isNullOrEmpty(token)) {
-                logger.error("请求参数缺失. URL = [{}].", request.getURI().toString());
+                logger.error("缺少Token参数. URL = [{}].", request.getURI().toString());
                 return false;
             }
 

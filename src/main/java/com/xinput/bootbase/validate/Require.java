@@ -1,6 +1,6 @@
 package com.xinput.bootbase.validate;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -16,8 +16,8 @@ import java.util.Collection;
 /**
  * 验证参数不能为空，且不允许为空字符串
  *
- * @Author: xinput
- * @Date: 2020-06-19 17:00
+ * @author xinput
+ * @date 2020-06-19 17:00
  */
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)

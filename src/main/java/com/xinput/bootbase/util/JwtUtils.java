@@ -1,7 +1,5 @@
 package com.xinput.bootbase.util;
 
-//import com.auth0.jwt.JWTSigner;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
@@ -10,18 +8,17 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.Claim;
 import com.google.common.collect.Maps;
+import com.xinput.bleach.consts.BaseConsts;
+import com.xinput.bleach.util.BeanUtils;
 import com.xinput.bootbase.config.DefaultConfig;
-import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.domain.JwtToken;
 
 import java.util.Date;
 import java.util.Map;
 
-//import com.auth0.jwt.JWTVerifyException;
-
 /**
- * @Author: xinput
- * @Date: 2020-06-15 15:35
+ * @author xinput
+ * @date 2020-06-15 15:35
  */
 public class JwtUtils {
 
@@ -47,6 +44,10 @@ public class JwtUtils {
 
     public static String sign(Object aud, String platform) {
         return sign(aud, platform, Maps.newHashMap());
+    }
+
+    public static String sign(Object aud, Map<String, Object> claims) {
+        return sign(aud, BaseConsts.DEFAULT, claims);
     }
 
     /**
@@ -98,7 +99,6 @@ public class JwtUtils {
     }
 
     public static JwtToken verifyJwtToken(String jwt) throws TokenExpiredException, JWTVerificationException {
-        final Map<String, Object> claims = verify(jwt);
-        return BeanUtils.convertor(claims, JwtToken.class);
+        return BeanUtils.convertor(verify(jwt), JwtToken.class);
     }
 }

@@ -1,6 +1,6 @@
 package com.xinput.bootbase.consts;
 
-import com.xinput.bootbase.annotation.Remark;
+import com.xinput.bleach.annotation.Remark;
 
 import java.lang.reflect.Field;
 import java.util.Hashtable;

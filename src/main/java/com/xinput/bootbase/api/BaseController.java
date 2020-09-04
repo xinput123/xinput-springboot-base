@@ -1,9 +1,13 @@
 package com.xinput.bootbase.api;
 
 import com.google.common.collect.Maps;
+import com.xinput.bleach.consts.BaseConsts;
+import com.xinput.bleach.util.JsonUtils;
+import com.xinput.bleach.util.MimeTypes;
+import com.xinput.bleach.util.StreamUtils;
+import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.BaseConsts;
 import com.xinput.bootbase.consts.ErrorCode;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
@@ -12,10 +16,6 @@ import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
 import com.xinput.bootbase.exception.BaseFileException;
 import com.xinput.bootbase.exception.BaseUnexpectedException;
-import com.xinput.bootbase.util.JsonUtils;
-import com.xinput.bootbase.util.MimeTypes;
-import com.xinput.bootbase.util.StreamUtils;
-import com.xinput.bootbase.util.StringUtils;
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.compress.utils.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -135,7 +135,7 @@ public abstract class BaseController {
     /**
      * 下载
      *
-     * @param file
+     * @param file 文件
      * @param name 别名
      */
     protected void renderBinary(File file, String name) {
@@ -151,9 +151,9 @@ public abstract class BaseController {
     }
 
     /**
-     * @param file
-     * @param is
-     * @param name
+     * @param file   文件
+     * @param is     流数据
+     * @param name   文件名称
      * @param inline true时表示在线查看，false表示下载
      */
     private void render(File file, InputStream is, String name, boolean inline) {
@@ -233,7 +233,7 @@ public abstract class BaseController {
     }
 
     private boolean canAsciiEncode(String string) {
-        CharsetEncoder asciiEncoder = Charset.forName("US-ASCII").newEncoder();
+        CharsetEncoder asciiEncoder = StandardCharsets.US_ASCII.newEncoder();
         return asciiEncoder.canEncode(string);
     }
 
@@ -268,7 +268,7 @@ public abstract class BaseController {
     /**
      * Send 301 redirect
      *
-     * @param url
+     * @param url redirect url
      * @throws IOException
      */
     protected void redirect(String url) {

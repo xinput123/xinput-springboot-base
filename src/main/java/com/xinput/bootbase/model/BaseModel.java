@@ -3,13 +3,13 @@ package com.xinput.bootbase.model;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.xinput.bootbase.consts.BaseConsts;
+import com.xinput.bleach.consts.BaseConsts;
 
 import java.time.LocalDateTime;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-17 11:56
+ * @author xinput
+ * @date 2020-06-17 11:56
  */
 public class BaseModel {
 

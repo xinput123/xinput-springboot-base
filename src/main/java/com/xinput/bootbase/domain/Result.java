@@ -3,8 +3,8 @@ package com.xinput.bootbase.domain;
 import com.xinput.bootbase.consts.ErrorCode;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-06 14:37
+ * @author xinput
+ * @date 2020-06-06 14:37
  */
 public class Result {
 

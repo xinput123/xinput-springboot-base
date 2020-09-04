@@ -3,8 +3,8 @@ package com.xinput.bootbase.domain;
 import javax.validation.constraints.NotNull;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-15 15:23
+ * @author xinput
+ * @date 2020-06-15 15:23
  */
 public class Token {
 

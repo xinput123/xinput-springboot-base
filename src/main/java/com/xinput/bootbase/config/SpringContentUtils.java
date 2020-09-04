@@ -1,7 +1,7 @@
 package com.xinput.bootbase.config;
 
-import com.xinput.bootbase.consts.BaseConsts;
-import com.xinput.bootbase.util.StringUtils;
+import com.xinput.bleach.consts.BaseConsts;
+import com.xinput.bleach.util.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -12,8 +12,8 @@ import java.util.Locale;
 /**
  * 获取bean工具类
  *
- * @Author: xinput
- * @Date: 2020-06-21 10:46
+ * @author xinput
+ * @date 2020-06-21 10:46
  */
 @Component
 public class SpringContentUtils implements ApplicationContextAware {

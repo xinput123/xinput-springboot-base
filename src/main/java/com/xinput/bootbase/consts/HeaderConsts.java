@@ -1,10 +1,10 @@
 package com.xinput.bootbase.consts;
 
-import com.xinput.bootbase.annotation.Remark;
+import com.xinput.bleach.annotation.Remark;
 
 /**
- * @Author: xinput
- * @Date: 2020-06-09 22:50
+ * @author xinput
+ * @date 2020-06-09 22:50
  */
 public class HeaderConsts {
 

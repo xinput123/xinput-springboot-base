@@ -1,5 +1,8 @@
 package com.xinput.bootbase.api;
 
+import com.xinput.bleach.util.MimeTypes;
+import com.xinput.bleach.util.StringUtils;
+import com.xinput.bleach.util.TimeUtils;
 import com.xinput.bootbase.config.DefaultConfig;
 import com.xinput.bootbase.consts.ErrorCode;
 import com.xinput.bootbase.domain.BaseHttp;
@@ -7,9 +10,6 @@ import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
 import com.xinput.bootbase.exception.BaseFileException;
 import com.xinput.bootbase.exception.BaseUnexpectedException;
-import com.xinput.bootbase.util.MimeTypes;
-import com.xinput.bootbase.util.StringUtils;
-import com.xinput.bootbase.util.TimeUtils;
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;

@@ -1,8 +1,8 @@
 package com.xinput.bootbase.domain;
 
 /**
- * @Author: xinput
- * @Date: 2020-08-06 14:07
+ * @author xinput
+ * @date 2020-08-06 14:07
  */
 public class Student {
 

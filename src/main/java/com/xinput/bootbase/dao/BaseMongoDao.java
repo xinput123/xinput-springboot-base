@@ -10,8 +10,8 @@ import java.util.List;
 /**
  * 封装mongo基础查询
  *
- * @Author: xinput
- * @Date: 2020-06-17 15:59
+ * @author xinput
+ * @date 2020-06-17 15:59
  */
 public abstract class BaseMongoDao<T> {
 
