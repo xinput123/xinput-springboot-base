@@ -69,14 +69,23 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
         String sessionKey = platform + "-" + userId;
         WebSocketSession webSocketSession = WssManager.get(sessionKey);
         if (webSocketSession != null) {
-            logger.warn("userId:[{}],已经建立了长连接[{}].", webSocketSession.getAttributes().get(HeaderConsts.REQUEST_ID_KEY));
-            return false;
-        } else {
-            attributes.put(JwtUtils.AUD, userId);
-            attributes.put(JwtUtils.PLATFORM, platform);
-            attributes.put(HeaderConsts.REQUEST_ID_KEY, requestId);
-            return true;
+            String existRequestId = String.valueOf(webSocketSession.getAttributes().get(HeaderConsts.REQUEST_ID_KEY));
+            logger.info("userId:[{}],已经建立了长连接 [{}]. 检测是否可以复用.", userId, existRequestId);
+            // 如果长连接信息存在
+            if (webSocketSession.isOpen()) {
+                logger.info("userId:[{}] 建立的长连接 [{}] 存在并可以直接复用.", userId, existRequestId);
+                attributes.putAll(webSocketSession.getAttributes());
+                return true;
+            } else {
+                logger.info("user:[{}] 已经存在的长连接 [{}] 不可用.重新创建.", userId, existRequestId);
+                WssManager.remove(sessionKey);
+            }
         }
+
+        attributes.put(JwtUtils.AUD, userId);
+        attributes.put(JwtUtils.PLATFORM, platform);
+        attributes.put(HeaderConsts.REQUEST_ID_KEY, requestId);
+        return true;
 
     }
 
