@@ -27,6 +27,7 @@ public class WssManager {
      * @param session
      */
     public static void add(String key, WebSocketSession session) {
+        removeAndClose(key);
         webSocketSessionMap.put(key, session);
     }
 

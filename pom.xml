@@ -13,7 +13,7 @@
 
     <groupId>com.github.xinput123</groupId>
     <artifactId>xinput-springboot-base</artifactId>
-    <version>0.0.9</version>
+    <version>0.1.0</version>
 
     <name>xinput-springboot-base</name>
     <description>springboot的一个基本封装</description>

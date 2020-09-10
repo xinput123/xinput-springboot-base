@@ -30,14 +30,8 @@ public abstract class AbstractTextWebSocketHandler extends TextWebSocketHandler 
         final Object userId = attributes.get(JwtUtils.AUD);
         final Object platform = attributes.get(JwtUtils.PLATFORM);
         final String sessionKey = platform + "-" + userId;
-        if (WssManager.get(sessionKey) == null) {
-            logger.info("用户[{}]在平台[{}]上创建长连接[{}]", userId, platform, attributes.get(HeaderConsts.REQUEST_ID_KEY));
-            WssManager.add(sessionKey, session);
-        } else {
-            logger.info("用户[{}]在平台[{}] 已经创建了长连接[{}],复用.", userId, platform, attributes.get(HeaderConsts.REQUEST_ID_KEY));
-        }
 
-
+        WssManager.add(sessionKey, session);
         // 可以在用户建立连接后，立刻推送未读消息，这里省略
     }
 
