@@ -8,8 +8,8 @@ import java.util.Hashtable;
 /**
  * 返回码定义.
  */
-public final class ErrorCode {
-    private ErrorCode() {
+public final class BootBaseError {
+    private BootBaseError() {
     }
 
     /**
@@ -106,7 +106,7 @@ public final class ErrorCode {
             20);
 
     static {
-        Field[] fields = ErrorCode.class.getFields();
+        Field[] fields = BootBaseError.class.getFields();
         for (Field field : fields) {
             if (field.isAnnotationPresent(Remark.class)) {
                 try {

@@ -6,9 +6,9 @@ import com.xinput.bleach.util.JsonUtils;
 import com.xinput.bleach.util.MimeTypes;
 import com.xinput.bleach.util.StreamUtils;
 import com.xinput.bleach.util.StringUtils;
-import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.config.BootBaseConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.ErrorCode;
+import com.xinput.bootbase.consts.BootBaseError;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.Header;
@@ -45,7 +45,7 @@ public abstract class BaseController {
 
     private static final String ATTACHMENT_DISPOSITION_TYPE = "attachment";
 
-    private static final URLCodec encoder = new URLCodec();
+    private static final URLCodec ENCODER = new URLCodec();
 
     @Autowired
     private ThreadLocal<BaseHttp> baseHttpThreadLocal;
@@ -58,7 +58,7 @@ public abstract class BaseController {
     protected String currentUserId() {
         // 如果是dev环境，直接放行
         if (BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {
-            return DefaultConfig.getMockUserId();
+            return BootBaseConfig.getMockUserId();
         }
 
         Object obj = baseHttpThreadLocal.get().getRequest().getAttribute("aud");
@@ -224,7 +224,7 @@ public abstract class BaseController {
         } else {
             String encoding = response.getCharacterEncoding();
             String contentDisposition = "%1$s; filename*=" + encoding + "''%2$s; filename=\"%2$s\"";
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), encoder.encode(name, encoding)));
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, String.format(contentDisposition, dispositionType(inline), ENCODER.encode(name, encoding)));
         }
     }
 
@@ -281,7 +281,7 @@ public abstract class BaseController {
             map.put("url", url);
             map.put("code", "resource not exists");
             map.put("request_id", this.baseHttpThreadLocal.get().getRequest().getAttribute(HeaderConsts.REQUEST_ID_KEY));
-            throw new BaseException(HttpStatus.NOT_FOUND, ErrorCode.CLIENT_RESOURCE_NOT_FOUND, JsonUtils.toJsonString(map));
+            throw new BaseException(HttpStatus.NOT_FOUND, BootBaseError.CLIENT_RESOURCE_NOT_FOUND, JsonUtils.toJsonString(map));
         }
     }
 
@@ -305,7 +305,7 @@ public abstract class BaseController {
      * Send 400 bad request
      */
     protected void badRequest(String message) throws BaseException {
-        throw new BaseException(HttpStatus.BAD_REQUEST, ErrorCode.CLIENT_RESOURCE_NOT_FOUND, message);
+        throw new BaseException(HttpStatus.BAD_REQUEST, BootBaseError.CLIENT_RESOURCE_NOT_FOUND, message);
     }
 
     /**
@@ -319,14 +319,14 @@ public abstract class BaseController {
      * Send 403 forbidden
      */
     public void forbidden() {
-        throw new BaseException(HttpStatus.FORBIDDEN, ErrorCode.CLIENT_ACCESS_DENIED);
+        throw new BaseException(HttpStatus.FORBIDDEN, BootBaseError.CLIENT_ACCESS_DENIED);
     }
 
     /**
      * Send 403 forbidden
      */
     public void forbidden(String message) {
-        throw new BaseException(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, ErrorCode.CLIENT_OVER_QUOTA, message);
+        throw new BaseException(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, BootBaseError.CLIENT_OVER_QUOTA, message);
     }
 
     /**
@@ -341,7 +341,7 @@ public abstract class BaseController {
      * Send 404 bad request
      */
     protected void notFound(String message) {
-        throw new BaseException(HttpStatus.NOT_FOUND, ErrorCode.CLIENT_RESOURCE_NOT_FOUND, message);
+        throw new BaseException(HttpStatus.NOT_FOUND, BootBaseError.CLIENT_RESOURCE_NOT_FOUND, message);
     }
 
     /**

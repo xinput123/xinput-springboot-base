@@ -30,14 +30,14 @@ public @interface Email {
 
     class Check implements ConstraintValidator<Email, Object> {
 
-        private final static Pattern emailPattern = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[a-zA-Z0-9](?:[\\w-]*[\\w])?");
+        private final static Pattern EMAIL_PATTERN = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[a-zA-Z0-9](?:[\\w-]*[\\w])?");
 
         @Override
         public boolean isValid(Object value, ConstraintValidatorContext context) {
             if (value == null || value.toString().length() == 0) {
                 return true;
             }
-            return emailPattern.matcher(value.toString()).matches();
+            return EMAIL_PATTERN.matcher(value.toString()).matches();
         }
     }
 }

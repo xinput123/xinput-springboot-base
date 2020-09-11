@@ -3,8 +3,8 @@ package com.xinput.bootbase.api;
 import com.xinput.bleach.util.MimeTypes;
 import com.xinput.bleach.util.StringUtils;
 import com.xinput.bleach.util.TimeUtils;
-import com.xinput.bootbase.config.DefaultConfig;
-import com.xinput.bootbase.consts.ErrorCode;
+import com.xinput.bootbase.config.BootBaseConfig;
+import com.xinput.bootbase.consts.BootBaseError;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
@@ -48,9 +48,9 @@ public abstract class BaseService {
      * @param duration like 2h, 3d
      */
     protected void setJwtCookie(String jwt, String duration) {
-        Cookie cookie = new Cookie(DefaultConfig.getCookieTokenName(), jwt);
+        Cookie cookie = new Cookie(BootBaseConfig.getCookieTokenName(), jwt);
         cookie.setPath(StringUtils.SLASH);
-        cookie.setSecure(DefaultConfig.getCookieSecure());
+        cookie.setSecure(BootBaseConfig.getCookieSecure());
         cookie.setHttpOnly(true);
         cookie.setMaxAge(TimeUtils.parseDuration(duration));
 
@@ -191,7 +191,7 @@ public abstract class BaseService {
      * Send 400 bad request
      */
     protected void badRequest(String message) throws BaseException {
-        throw new BaseException(HttpStatus.BAD_REQUEST, ErrorCode.CLIENT_RESOURCE_NOT_FOUND, message);
+        throw new BaseException(HttpStatus.BAD_REQUEST, BootBaseError.CLIENT_RESOURCE_NOT_FOUND, message);
     }
 
     /**
@@ -212,21 +212,21 @@ public abstract class BaseService {
      * Send 401 Unauthorized
      */
     public void unauthorized(String message) {
-        throw new BaseException(HttpStatus.UNAUTHORIZED, ErrorCode.CLIENT_AUTH_ERROR, message);
+        throw new BaseException(HttpStatus.UNAUTHORIZED, BootBaseError.CLIENT_AUTH_ERROR, message);
     }
 
     /**
      * Send 401 Unauthorized
      */
     public void unauthorized() {
-        throw new BaseException(HttpStatus.UNAUTHORIZED, ErrorCode.CLIENT_AUTH_ERROR);
+        throw new BaseException(HttpStatus.UNAUTHORIZED, BootBaseError.CLIENT_AUTH_ERROR);
     }
 
     /**
      * Send 404 bad request
      */
     protected void notFound(String message) {
-        throw new BaseException(HttpStatus.NOT_FOUND, ErrorCode.CLIENT_RESOURCE_NOT_FOUND, message);
+        throw new BaseException(HttpStatus.NOT_FOUND, BootBaseError.CLIENT_RESOURCE_NOT_FOUND, message);
     }
 
     /**
@@ -258,14 +258,14 @@ public abstract class BaseService {
      * Send 500 INTERNAL_SERVER_ERROR
      */
     protected void error() {
-        throw new BaseException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.SERVER_INTERNAL_ERROR);
+        throw new BaseException(HttpStatus.INTERNAL_SERVER_ERROR, BootBaseError.SERVER_INTERNAL_ERROR);
     }
 
     /**
      * Send 500 INTERNAL_SERVER_ERROR
      */
     protected void error(String message) {
-        throw new BaseException(HttpStatus.INTERNAL_SERVER_ERROR, ErrorCode.SERVER_INTERNAL_ERROR, message);
+        throw new BaseException(HttpStatus.INTERNAL_SERVER_ERROR, BootBaseError.SERVER_INTERNAL_ERROR, message);
     }
 
     /**
@@ -279,6 +279,6 @@ public abstract class BaseService {
      * Send 509 CLIENT_OVER_QUOTA
      */
     public void limitExceeded(String message) {
-        throw new BaseException(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, ErrorCode.CLIENT_OVER_QUOTA, message);
+        throw new BaseException(HttpStatus.BANDWIDTH_LIMIT_EXCEEDED, BootBaseError.CLIENT_OVER_QUOTA, message);
     }
 }

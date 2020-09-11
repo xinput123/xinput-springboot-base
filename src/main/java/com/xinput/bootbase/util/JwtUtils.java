@@ -10,7 +10,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.google.common.collect.Maps;
 import com.xinput.bleach.consts.BaseConsts;
 import com.xinput.bleach.util.BeanUtils;
-import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.config.BootBaseConfig;
 import com.xinput.bootbase.domain.JwtToken;
 
 import java.util.Date;
@@ -32,7 +32,7 @@ public class JwtUtils {
 
     public static final String TOKEN = "token";
 
-    private static final Algorithm ALGORITHM = Algorithm.HMAC256(DefaultConfig.getApiSecureKey());
+    private static final Algorithm ALGORITHM = Algorithm.HMAC256(BootBaseConfig.getApiSecureKey());
 
     public static String sign(String aud) {
         return sign(aud, BaseConsts.DEFAULT);
@@ -68,7 +68,7 @@ public class JwtUtils {
 //                .withAudience("xinput")
                 // 签发时间
                 .withIssuedAt(currentTime)
-                .withExpiresAt(new Date(currentTime.getTime() + 1000L * Long.valueOf(DefaultConfig.getTokenExp())))
+                .withExpiresAt(new Date(currentTime.getTime() + 1000L * Long.valueOf(BootBaseConfig.getTokenExp())))
 //                .withJWTId("001") // 分配JWT的ID
                 // 定义公共域信息
                 .withClaim(AUD, String.valueOf(aud))

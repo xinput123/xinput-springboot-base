@@ -14,16 +14,17 @@ import java.util.Map;
  * @date 2020-06-18 22:03
  */
 @RestController
-public class Applications {
+public class BootBaseApps {
 
     @PassSecure
     @GetMapping("/status")
     public Map<String, Object> status() {
-        Map<String, Object> status = Maps.newHashMap();
-        status.put("status", "ok");
-        status.put("serverTime", LocalDateTime.now());
-        status.put("serverName", SpringContentUtils.getId());
+        Map<String, Object> params = Maps.newHashMap();
+        params.put("status", "ok");
+        params.put("mode", SpringContentUtils.getActiveProfile());
+        params.put("serverName", SpringContentUtils.getId());
+        params.put("serverTime", LocalDateTime.now());
 
-        return status;
+        return params;
     }
 }

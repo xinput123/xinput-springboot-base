@@ -3,7 +3,7 @@ package com.xinput.bootbase.interceptor;
 import com.xinput.bleach.consts.BaseConsts;
 import com.xinput.bleach.util.ObjectId;
 import com.xinput.bleach.util.StringUtils;
-import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.config.BootBaseConfig;
 import com.xinput.bootbase.config.SpringContentUtils;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.JwtToken;
@@ -45,7 +45,7 @@ public class BaseWebSocketInterceptor implements HandshakeInterceptor {
         }
 
         String requestId = ObjectId.stringId();
-        String userId = DefaultConfig.getMockUserId();
+        String userId = BootBaseConfig.getMockUserId();
         String platform = BaseConsts.DEFAULT;
 
         if (!BaseConsts.MODE_ACTIVE_DEV.equalsIgnoreCase(SpringContentUtils.getActiveProfile())) {

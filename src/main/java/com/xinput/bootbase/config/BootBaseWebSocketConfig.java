@@ -13,7 +13,7 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
  * @Version 1.0
  */
 @Configuration
-public class WebSocketConfig {
+public class BootBaseWebSocketConfig {
 
     /**
      * 服务器节点

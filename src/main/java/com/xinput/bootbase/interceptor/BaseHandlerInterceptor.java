@@ -6,7 +6,7 @@ import com.xinput.bleach.util.ObjectId;
 import com.xinput.bleach.util.StringUtils;
 import com.xinput.bootbase.annotation.PassSecure;
 import com.xinput.bootbase.config.SpringContentUtils;
-import com.xinput.bootbase.consts.ErrorCode;
+import com.xinput.bootbase.consts.BootBaseError;
 import com.xinput.bootbase.consts.HeaderConsts;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.JwtToken;
@@ -135,7 +135,7 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
                         request.getHeader("authorization"), "Bearer")
         );
         Result result = new Result();
-        result.setCodeWithDefaultMsg(ErrorCode.CLIENT_AUTH_ERROR);
+        result.setCodeWithDefaultMsg(BootBaseError.CLIENT_AUTH_ERROR);
 
         if (StringUtils.isNullOrEmpty(token)) {
             unauthorized(result);
@@ -146,11 +146,11 @@ public class BaseHandlerInterceptor extends HandlerInterceptorAdapter {
             final JwtToken jwtToken = JwtUtils.verifyJwtToken(token);
             request.setAttribute(JwtUtils.AUD, jwtToken.getAud());
         } catch (TokenExpiredException e) {
-            result.setCodeWithDefaultMsg(ErrorCode.CLIENT_AUTH_TOKEN_EXPIRED);
+            result.setCodeWithDefaultMsg(BootBaseError.CLIENT_AUTH_TOKEN_EXPIRED);
             unauthorized(result);
             return;
         } catch (Exception e) {
-            result.setCodeWithDefaultMsg(ErrorCode.CLIENT_AUTH_ERROR);
+            result.setCodeWithDefaultMsg(BootBaseError.CLIENT_AUTH_ERROR);
             unauthorized(result);
         }
     }

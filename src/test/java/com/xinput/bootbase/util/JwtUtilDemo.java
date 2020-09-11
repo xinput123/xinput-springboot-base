@@ -9,7 +9,7 @@ import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.xinput.bleach.util.DateUtils;
 import com.xinput.bleach.util.JsonUtils;
-import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.config.BootBaseConfig;
 import com.xinput.bootbase.domain.JwtToken;
 import org.junit.Test;
 
@@ -74,7 +74,7 @@ public class JwtUtilDemo {
         String token = JwtUtils.sign("1001");
         System.out.println("token : " + token);
 
-        final Algorithm ALGORITHM = Algorithm.HMAC256(DefaultConfig.getApiSecureKey());
+        final Algorithm ALGORITHM = Algorithm.HMAC256(BootBaseConfig.getApiSecureKey());
         JWTVerifier verifier = JWT.require(ALGORITHM).build();
         DecodedJWT originToken = verifier.verify(token);
         Map<String, Claim> claimMaps = originToken.getClaims();

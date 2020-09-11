@@ -1,6 +1,6 @@
 package com.xinput.bootbase.domain;
 
-import com.xinput.bootbase.consts.ErrorCode;
+import com.xinput.bootbase.consts.BootBaseError;
 
 /**
  * @author xinput
@@ -30,7 +30,7 @@ public class Result {
 
     public void setCodeWithDefaultMsg(int code) {
         this.code = code;
-        this.msg = ErrorCode.getMsg(code);
+        this.msg = BootBaseError.getMsg(code);
     }
 
     public void setCodeMsg(int code, String msg) {

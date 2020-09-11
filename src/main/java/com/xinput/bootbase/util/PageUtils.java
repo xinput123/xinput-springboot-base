@@ -1,14 +1,14 @@
 package com.xinput.bootbase.util;
 
-import com.xinput.bootbase.config.DefaultConfig;
+import com.xinput.bootbase.config.BootBaseConfig;
 
 public class PageUtils {
 
-    private static final int MAX_OFFSET = DefaultConfig.getMaxOffset();
+    private static final int MAX_OFFSET = BootBaseConfig.getMaxOffset();
 
-    private static final int MAX_LIMIT = DefaultConfig.getMaxLimit();
+    private static final int MAX_LIMIT = BootBaseConfig.getMaxLimit();
 
-    private static final int DEFAULT_LIMIT = DefaultConfig.getDefaultLimit();
+    private static final int DEFAULT_LIMIT = BootBaseConfig.getDefaultLimit();
 
     /**
      * 验证limit参数，参数可以为null

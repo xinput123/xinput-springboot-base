@@ -1,10 +1,10 @@
 package com.xinput.bootbase.domain;
 
+import com.xinput.bootbase.config.SpringContentUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.PreDestroy;
-import java.time.LocalDateTime;
 
 /**
  * @author xinput
@@ -16,7 +16,7 @@ public class TerminateBean {
 
     @PreDestroy
     public void preDestroy() {
-        logger.info("TerminalBean is destroyed..." + LocalDateTime.now().toString());
+        logger.info("Server [{}] is destroyed...", SpringContentUtils.getId());
     }
 
 }

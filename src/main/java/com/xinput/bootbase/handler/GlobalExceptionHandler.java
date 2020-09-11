@@ -2,7 +2,7 @@ package com.xinput.bootbase.handler;
 
 import com.xinput.bleach.util.BuilderUtils;
 import com.xinput.bleach.util.StringUtils;
-import com.xinput.bootbase.consts.ErrorCode;
+import com.xinput.bootbase.consts.BootBaseError;
 import com.xinput.bootbase.domain.BaseHttp;
 import com.xinput.bootbase.domain.Result;
 import com.xinput.bootbase.exception.BaseException;
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
             detailMessage = detailMessage.substring(detailMessage.indexOf(StringUtils.COLON) + 1);
         }
         Result result = BuilderUtils.of(Result::new)
-                .with(Result::setCode, ErrorCode.CLIENT_FORMAT_ERROR)
+                .with(Result::setCode, BootBaseError.CLIENT_FORMAT_ERROR)
                 .with(Result::setMessage, detailMessage)
                 .build();
 
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
         StringBuffer errorMsg = new StringBuffer();
         errors.stream().forEach(x -> errorMsg.append(x.getDefaultMessage()).append(";"));
         Result result = BuilderUtils.of(Result::new)
-                .with(Result::setCode, ErrorCode.CLIENT_FORMAT_ERROR)
+                .with(Result::setCode, BootBaseError.CLIENT_FORMAT_ERROR)
                 .with(Result::setMessage, errorMsg.toString())
                 .build();
 
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
             detailMessage = detailMessage.substring(0, detailMessage.indexOf(StringUtils.COLON));
         }
         Result result = BuilderUtils.of(Result::new)
-                .with(Result::setCode, ErrorCode.CLIENT_FORMAT_ERROR)
+                .with(Result::setCode, BootBaseError.CLIENT_FORMAT_ERROR)
                 .with(Result::setMessage, detailMessage)
                 .build();
 
@@ -102,7 +102,7 @@ public class GlobalExceptionHandler {
         String detailMessage = npe.getStackTrace()[0].toString();
 
         Result result = BuilderUtils.of(Result::new)
-                .with(Result::setCode, ErrorCode.SERVER_INTERNAL_ERROR)
+                .with(Result::setCode, BootBaseError.SERVER_INTERNAL_ERROR)
                 .with(Result::setMessage, detailMessage)
                 .build();
 
@@ -186,7 +186,7 @@ public class GlobalExceptionHandler {
 
     private ResponseEntity<Result> global(HttpServletRequest req, String errorMsg) {
         Result result = BuilderUtils.of(Result::new)
-                .with(Result::setCode, ErrorCode.SERVER_INTERNAL_ERROR)
+                .with(Result::setCode, BootBaseError.SERVER_INTERNAL_ERROR)
                 .with(Result::setMessage, errorMsg)
                 .build();
 

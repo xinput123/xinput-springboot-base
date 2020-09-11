@@ -6,7 +6,7 @@ package com.xinput.bootbase.consts;
  * @author xinput
  * @date 2020-06-10 21:48
  */
-public class DefaultConsts {
+public class BootBaseConsts {
 
     /**
      * 默认配置文件名称
@@ -64,16 +64,6 @@ public class DefaultConsts {
      * 对象存储的秘钥
      */
     public static final String BUCKET_SECRET_KEY = "bucket.access.secret";
-
-    /**
-     * 微信小程序设置:wechat.appid
-     */
-    public static final String WECHAT_APPID = "wechat.appid";
-
-    /**
-     * 微信小程序设置:wechat.secret
-     */
-    public static final String WECHAT_SECRET = "wechat.secret";
 
     /**
      * 默认取多少条数据

@@ -33,7 +33,7 @@ import java.util.TimeZone;
  */
 @Configuration
 @EnableWebMvc
-public class DefaultWebMvcConfig implements WebMvcConfigurer {
+public class BootBaseWebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

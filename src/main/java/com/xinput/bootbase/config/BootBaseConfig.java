@@ -3,7 +3,7 @@ package com.xinput.bootbase.config;
 import com.google.common.collect.Lists;
 import com.xinput.bleach.util.SimpleProperties;
 import com.xinput.bleach.util.StringUtils;
-import com.xinput.bootbase.consts.DefaultConsts;
+import com.xinput.bootbase.consts.BootBaseConsts;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @author xinput
  * @date 2020-06-21 09:46
  */
-public class DefaultConfig {
+public class BootBaseConfig {
 
     private static final long TOKEN_EXP = 3600 * 24;
 
@@ -22,7 +22,7 @@ public class DefaultConfig {
 
     static {
         try {
-            SP = SimpleProperties.readConfiguration(DefaultConsts.DEFAULT_SYSTEM_FILE);
+            SP = SimpleProperties.readConfiguration(BootBaseConsts.DEFAULT_SYSTEM_FILE);
         } catch (Exception e) {
             SP = null;
         }
@@ -34,7 +34,7 @@ public class DefaultConfig {
      * @return
      */
     public static final String getMockUserId() {
-        return get(DefaultConsts.MOCK_USER_ID, "1");
+        return get(BootBaseConsts.MOCK_USER_ID, "1");
     }
 
     /**
@@ -43,60 +43,46 @@ public class DefaultConfig {
      * @return
      */
     public static final String getMockUserName() {
-        return get(DefaultConsts.MOCK_USER_NAME, "xinput-001");
+        return get(BootBaseConsts.MOCK_USER_NAME, "xinput-001");
     }
 
     /**
      * cookie中token的值
      */
     public static final String getCookieTokenName() {
-        return get(DefaultConsts.API_COOKIE_TOKEN, "jwt");
+        return get(BootBaseConsts.API_COOKIE_TOKEN, "jwt");
     }
 
     /**
      * cookie验证
      */
     public static final boolean getCookieSecure() {
-        return getBoolean(DefaultConsts.API_COOKIE_ENABLE, Boolean.FALSE);
+        return getBoolean(BootBaseConsts.API_COOKIE_ENABLE, Boolean.FALSE);
     }
 
     /**
      * 是否开启token验证
      */
     public static final boolean getSecureEnable() {
-        return getBoolean(DefaultConsts.API_COOKIE_ENABLE, Boolean.TRUE);
+        return getBoolean(BootBaseConsts.API_SECURE_ENABLE, Boolean.TRUE);
     }
 
     /**
      * token过期时间设置
      */
     public static String getTokenExp() {
-        return get(DefaultConsts.API_TOKEN_EXPIRE, String.valueOf(TOKEN_EXP));
+        return get(BootBaseConsts.API_TOKEN_EXPIRE, String.valueOf(TOKEN_EXP));
     }
 
     /**
      * token刷新时间
      */
     public static String getRefreshToeknExp() {
-        return get(DefaultConsts.API__REFRESH_TOKEN_EXPIRE, String.valueOf(REFRESH_TOKEN_EXP));
+        return get(BootBaseConsts.API__REFRESH_TOKEN_EXPIRE, String.valueOf(REFRESH_TOKEN_EXP));
     }
 
     public static String getApiSecureKey() {
-        return get(DefaultConsts.API_SECRET_KEY, "xinput-boot");
-    }
-
-    /**
-     * 获取微信小程序id
-     */
-    public static String getWechatAppid() {
-        return get(DefaultConsts.WECHAT_APPID);
-    }
-
-    /**
-     * 获取微信小程序 secret
-     */
-    public static String getWechatSecret() {
-        return get(DefaultConsts.WECHAT_SECRET);
+        return get(BootBaseConsts.API_SECRET_KEY, "xinput-boot");
     }
 
     /**
@@ -105,7 +91,7 @@ public class DefaultConfig {
      * @return
      */
     public static String getBucketKey() {
-        return get(DefaultConsts.BUCKET_ACCESS_KEY);
+        return get(BootBaseConsts.BUCKET_ACCESS_KEY);
     }
 
     /**
@@ -114,28 +100,28 @@ public class DefaultConfig {
      * @return
      */
     public static String getBucketSecretKey() {
-        return get(DefaultConsts.BUCKET_SECRET_KEY);
+        return get(BootBaseConsts.BUCKET_SECRET_KEY);
     }
 
     /**
      * 默认取多少条数据
      */
     public static int getDefaultLimit() {
-        return getInt(DefaultConsts.DEFAULT_LIMIT, 10);
+        return getInt(BootBaseConsts.DEFAULT_LIMIT, 10);
     }
 
     /**
      * 默认取多少条数据
      */
     public static int getMaxLimit() {
-        return getInt(DefaultConsts.MAX_LIMIT, 50);
+        return getInt(BootBaseConsts.MAX_LIMIT, 50);
     }
 
     /**
      * 默认一次最多取多少条数据
      */
     public static int getMaxOffset() {
-        return getInt(DefaultConsts.MAX_OFFSET, 1000000);
+        return getInt(BootBaseConsts.MAX_OFFSET, 1000000);
     }
 
     public static final int getInt(String key, int defaultValue) {
