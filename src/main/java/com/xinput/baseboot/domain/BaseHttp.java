@@ -11,14 +11,14 @@ public class BaseHttp {
 
     private HttpServletRequest request;
 
-    private HttpServletResponse responsen;
+    private HttpServletResponse response;
 
     public BaseHttp() {
     }
 
-    public BaseHttp(HttpServletRequest request, HttpServletResponse responsen) {
+    public BaseHttp(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
-        this.responsen = responsen;
+        this.response = response;
     }
 
     public HttpServletRequest getRequest() {
@@ -29,12 +29,12 @@ public class BaseHttp {
         this.request = request;
     }
 
-    public HttpServletResponse getResponsen() {
-        return responsen;
+    public HttpServletResponse getResponse() {
+        return response;
     }
 
-    public void setResponsen(HttpServletResponse responsen) {
-        this.responsen = responsen;
+    public void setResponse(HttpServletResponse response) {
+        this.response = response;
     }
 }
 

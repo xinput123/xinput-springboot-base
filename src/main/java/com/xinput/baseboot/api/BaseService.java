@@ -19,13 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 
@@ -54,7 +48,7 @@ public abstract class BaseService {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(TimeUtils.parseDuration(duration));
 
-        baseHttpThreadLocal.get().getResponsen().addCookie(cookie);
+        baseHttpThreadLocal.get().getResponse().addCookie(cookie);
     }
 
     /**
@@ -91,7 +85,7 @@ public abstract class BaseService {
      * @param inline true时表示在线查看，false表示下载
      */
     private void render(File file, InputStream is, String name, boolean inline) {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         if (name != null) {
             setContentTypeIfNotSet(response, MimeTypes.getContentType(name));
         }
