@@ -11,7 +11,7 @@ import com.google.common.collect.Maps;
 import com.xinput.baseboot.config.BaseBootConfig;
 import com.xinput.baseboot.domain.JwtToken;
 import com.xinput.bleach.consts.BaseConsts;
-import com.xinput.bleach.util.BeanUtils;
+import com.xinput.bleach.util.bean.BeanUtils;
 
 import java.util.Date;
 import java.util.Map;
