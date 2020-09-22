@@ -26,13 +26,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -87,7 +81,7 @@ public abstract class BaseController {
      * 在response的header中添加 headerName
      */
     protected void setHeader(String headerName, String value) {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + headerName);
 
@@ -95,7 +89,7 @@ public abstract class BaseController {
     }
 
     protected void setHeader(List<Header> headers) {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         String headerNames = StreamUtils.union(StreamUtils.collectColumn(headers, Header::getName));
         String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + headerNames);
@@ -109,7 +103,7 @@ public abstract class BaseController {
      * set total count header to 0 and render empty list.
      */
     protected void renderEmptyList() {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         String headerValue = response.getHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS);
         response.setHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, headerValue + StringUtils.COMMA + HeaderConsts.TOTOL_COUNT_KEY);
         response.setHeader(HeaderConsts.TOTOL_COUNT_KEY, "0");
@@ -157,7 +151,7 @@ public abstract class BaseController {
      * @param inline true时表示在线查看，false表示下载
      */
     private void render(File file, InputStream is, String name, boolean inline) {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         if (name != null) {
             setContentTypeIfNotSet(response, MimeTypes.getContentType(name));
         }
@@ -272,7 +266,7 @@ public abstract class BaseController {
      * @throws IOException
      */
     protected void redirect(String url) {
-        HttpServletResponse response = baseHttpThreadLocal.get().getResponsen();
+        HttpServletResponse response = baseHttpThreadLocal.get().getResponse();
         response.setHeader(HttpHeaders.LOCATION, url);
         try {
             response.sendRedirect(url);
