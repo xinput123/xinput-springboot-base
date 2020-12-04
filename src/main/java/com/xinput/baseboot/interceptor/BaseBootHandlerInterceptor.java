@@ -80,9 +80,6 @@ public class BaseBootHandlerInterceptor extends HandlerInterceptorAdapter {
             response.addHeader(HeaderConsts.SESSION_ID_KEY, sessionId);
         }
 
-        //set default content type
-        response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
-
         // default content type without utf-8
         if (MediaType.APPLICATION_JSON_VALUE.equalsIgnoreCase(response.getContentType())) {
             response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
