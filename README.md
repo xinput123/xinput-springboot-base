@@ -52,3 +52,8 @@ redis.pool.minEvictableIdleTimeMillis=60000
 redis.pool.lifo=false
 redis.ips=localhost
 ```
+
+## TODO
+- 引入缓存机制
+- 引入限流机制
+- jwt优化、token优化
