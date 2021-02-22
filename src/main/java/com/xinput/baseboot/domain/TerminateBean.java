@@ -12,11 +12,11 @@ import javax.annotation.PreDestroy;
  */
 public class TerminateBean {
 
-    private static final Logger logger = LoggerFactory.getLogger(TerminateBean.class);
+  private static final Logger logger = LoggerFactory.getLogger(TerminateBean.class);
 
-    @PreDestroy
-    public void preDestroy() {
-        logger.info("Server [{}] is destroyed...", SpringContentUtils.getId());
-    }
+  @PreDestroy
+  public void preDestroy() {
+    logger.info("Server [{}] is destroyed...", SpringContentUtils.getId());
+  }
 
 }

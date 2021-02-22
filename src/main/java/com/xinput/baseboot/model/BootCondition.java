@@ -8,42 +8,42 @@ package com.xinput.baseboot.model;
  */
 public class BootCondition {
 
-    /**
-     * 关键字查询
-     */
-    private String keywords;
+  /**
+   * 关键字查询
+   */
+  private String keywords;
 
-    /**
-     * 偏移量
-     */
-    private Integer offset;
+  /**
+   * 偏移量
+   */
+  private Integer offset;
 
-    /**
-     * 数据条数
-     */
-    private Integer limit;
+  /**
+   * 数据条数
+   */
+  private Integer limit;
 
-    public String getKeywords() {
-        return keywords;
-    }
+  public String getKeywords() {
+    return keywords;
+  }
 
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
+  public void setKeywords(String keywords) {
+    this.keywords = keywords;
+  }
 
-    public Integer getOffset() {
-        return offset;
-    }
+  public Integer getOffset() {
+    return offset;
+  }
 
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
+  public void setOffset(Integer offset) {
+    this.offset = offset;
+  }
 
-    public Integer getLimit() {
-        return limit;
-    }
+  public Integer getLimit() {
+    return limit;
+  }
 
-    public void setLimit(Integer limit) {
-        this.limit = limit;
-    }
+  public void setLimit(Integer limit) {
+    this.limit = limit;
+  }
 }

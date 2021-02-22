@@ -25,37 +25,37 @@ import java.util.Collection;
 @Constraint(validatedBy = Require.Check.class)
 public @interface Require {
 
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    class Check implements ConstraintValidator<Require, Object> {
+  class Check implements ConstraintValidator<Require, Object> {
 
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null) {
-                return false;
-            }
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null) {
+        return false;
+      }
 
-            if (value instanceof String) {
-                return String.valueOf(value).trim().length() > 0;
-            }
+      if (value instanceof String) {
+        return String.valueOf(value).trim().length() > 0;
+      }
 
-            if (value instanceof Collection<?>) {
-                return CollectionUtils.isNotEmpty(((Collection<?>) value));
-            }
+      if (value instanceof Collection<?>) {
+        return CollectionUtils.isNotEmpty(((Collection<?>) value));
+      }
 
-            if (value.getClass().isArray()) {
-                try {
-                    return java.lang.reflect.Array.getLength(value) > 0;
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-
-            return true;
+      if (value.getClass().isArray()) {
+        try {
+          return java.lang.reflect.Array.getLength(value) > 0;
+        } catch (Exception e) {
+          return false;
         }
+      }
+
+      return true;
     }
+  }
 }

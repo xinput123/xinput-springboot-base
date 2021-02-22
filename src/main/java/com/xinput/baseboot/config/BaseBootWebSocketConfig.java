@@ -15,12 +15,12 @@ import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 @Configuration
 public class BaseBootWebSocketConfig {
 
-    /**
-     * 服务器节点
-     */
-    @Bean
-    public ServerEndpointExporter serverEndpointExporter() {
-        return new ServerEndpointExporter();
-    }
+  /**
+   * 服务器节点
+   */
+  @Bean
+  public ServerEndpointExporter serverEndpointExporter() {
+    return new ServerEndpointExporter();
+  }
 
 }

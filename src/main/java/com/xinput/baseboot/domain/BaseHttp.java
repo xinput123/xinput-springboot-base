@@ -9,33 +9,33 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class BaseHttp {
 
-    private HttpServletRequest request;
+  private HttpServletRequest request;
 
-    private HttpServletResponse response;
+  private HttpServletResponse response;
 
-    public BaseHttp() {
-    }
+  public BaseHttp() {
+  }
 
-    public BaseHttp(HttpServletRequest request, HttpServletResponse response) {
-        this.request = request;
-        this.response = response;
-    }
+  public BaseHttp(HttpServletRequest request, HttpServletResponse response) {
+    this.request = request;
+    this.response = response;
+  }
 
-    public HttpServletRequest getRequest() {
-        return request;
-    }
+  public HttpServletRequest getRequest() {
+    return request;
+  }
 
-    public void setRequest(HttpServletRequest request) {
-        this.request = request;
-    }
+  public void setRequest(HttpServletRequest request) {
+    this.request = request;
+  }
 
-    public HttpServletResponse getResponse() {
-        return response;
-    }
+  public HttpServletResponse getResponse() {
+    return response;
+  }
 
-    public void setResponse(HttpServletResponse response) {
-        this.response = response;
-    }
+  public void setResponse(HttpServletResponse response) {
+    this.response = response;
+  }
 }
 
 

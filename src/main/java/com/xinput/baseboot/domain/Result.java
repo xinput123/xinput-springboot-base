@@ -8,41 +8,41 @@ import com.xinput.baseboot.consts.BaseBootError;
  */
 public class Result {
 
-    private Integer code;
+  private Integer code;
 
-    private Object msg;
+  private Object msg;
 
-    public Integer getCode() {
-        return code;
-    }
+  public Integer getCode() {
+    return code;
+  }
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
+  public void setCode(Integer code) {
+    this.code = code;
+  }
 
-    public Object getMessage() {
-        return msg;
-    }
+  public Object getMessage() {
+    return msg;
+  }
 
-    public void setMessage(Object msg) {
-        this.msg = msg;
-    }
+  public void setMessage(Object msg) {
+    this.msg = msg;
+  }
 
-    public void setCodeWithDefaultMsg(int code) {
-        this.code = code;
-        this.msg = BaseBootError.getMsg(code);
-    }
+  public void setCodeWithDefaultMsg(int code) {
+    this.code = code;
+    this.msg = BaseBootError.getMsg(code);
+  }
 
-    public void setCodeMsg(int code, String msg) {
-        this.code = code;
-        this.msg = msg;
-    }
+  public void setCodeMsg(int code, String msg) {
+    this.code = code;
+    this.msg = msg;
+  }
 
-    @Override
-    public String toString() {
-        return "Result{" +
-                "code=" + code +
-                ", msg='" + msg + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Result{" +
+        "code=" + code +
+        ", msg='" + msg + '\'' +
+        '}';
+  }
 }

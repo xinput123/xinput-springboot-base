@@ -8,78 +8,78 @@ import javax.validation.constraints.NotNull;
  */
 public class Token {
 
-    private String userId;
+  private String userId;
 
-    private String name;
+  private String name;
 
-    private String platform;
+  private String platform;
 
-    private String token;
+  private String token;
 
-    @NotNull
-    private String refreshToken;
+  @NotNull
+  private String refreshToken;
 
-    public Token() {
-    }
+  public Token() {
+  }
 
-    public Token(String userId, String token, @NotNull String refreshToken) {
-        this.userId = userId;
-        this.token = token;
-        this.refreshToken = refreshToken;
-    }
+  public Token(String userId, String token, @NotNull String refreshToken) {
+    this.userId = userId;
+    this.token = token;
+    this.refreshToken = refreshToken;
+  }
 
-    public Token(String userId, String name, String token, @NotNull String refreshToken) {
-        this.userId = userId;
-        this.name = name;
-        this.token = token;
-        this.refreshToken = refreshToken;
-    }
+  public Token(String userId, String name, String token, @NotNull String refreshToken) {
+    this.userId = userId;
+    this.name = name;
+    this.token = token;
+    this.refreshToken = refreshToken;
+  }
 
-    public Token(String userId, String name, String platform, String token, @NotNull String refreshToken) {
-        this.userId = userId;
-        this.name = name;
-        this.platform = platform;
-        this.token = token;
-        this.refreshToken = refreshToken;
-    }
+  public Token(String userId, String name, String platform, String token, @NotNull String refreshToken) {
+    this.userId = userId;
+    this.name = name;
+    this.platform = platform;
+    this.token = token;
+    this.refreshToken = refreshToken;
+  }
 
-    public String getUserId() {
-        return userId;
-    }
+  public String getUserId() {
+    return userId;
+  }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public String getPlatform() {
-        return platform;
-    }
+  public String getPlatform() {
+    return platform;
+  }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
-    }
+  public void setPlatform(String platform) {
+    this.platform = platform;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+  public void setToken(String token) {
+    this.token = token;
+  }
 
-    public String getRefreshToken() {
-        return refreshToken;
-    }
+  public String getRefreshToken() {
+    return refreshToken;
+  }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+  public void setRefreshToken(String refreshToken) {
+    this.refreshToken = refreshToken;
+  }
 }

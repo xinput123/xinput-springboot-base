@@ -24,22 +24,22 @@ import java.util.regex.Pattern;
 @Constraint(validatedBy = RequireEmail.Check.class)
 public @interface RequireEmail {
 
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    class Check implements ConstraintValidator<RequireEmail, Object> {
+  class Check implements ConstraintValidator<RequireEmail, Object> {
 
-        static Pattern EMAIL_PATTERN = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[a-zA-Z0-9](?:[\\w-]*[\\w])?");
+    static Pattern EMAIL_PATTERN = Pattern.compile("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[a-zA-Z0-9](?:[\\w-]*[\\w])?");
 
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || StringUtils.isNullOrEmpty(String.valueOf(value))) {
-                return false;
-            }
-            return EMAIL_PATTERN.matcher(value.toString()).matches();
-        }
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || StringUtils.isNullOrEmpty(String.valueOf(value))) {
+        return false;
+      }
+      return EMAIL_PATTERN.matcher(value.toString()).matches();
     }
+  }
 }

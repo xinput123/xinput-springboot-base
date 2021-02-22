@@ -13,9 +13,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ThreadLocalConfig {
 
-    @Bean
-    public ThreadLocal<BaseHttp> getThreadLocal() {
-        return new ThreadLocal();
-    }
+  @Bean
+  public ThreadLocal<BaseHttp> getThreadLocal() {
+    return new ThreadLocal();
+  }
 
 }

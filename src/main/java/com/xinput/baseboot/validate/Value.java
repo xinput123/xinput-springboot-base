@@ -23,30 +23,30 @@ import java.util.Arrays;
 @Documented
 @Constraint(validatedBy = Value.Check.class)
 public @interface Value {
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    String[] value();
+  String[] value();
 
-    class Check implements ConstraintValidator<Value, Object> {
+  class Check implements ConstraintValidator<Value, Object> {
 
-        private String[] values;
+    private String[] values;
 
-        @Override
-        public void initialize(Value value) {
-            values = value.value();
-        }
-
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || value.toString().length() == 0) {
-                return true;
-            }
-            return Arrays.asList(values).contains(value);
-        }
-
+    @Override
+    public void initialize(Value value) {
+      values = value.value();
     }
+
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || value.toString().length() == 0) {
+        return true;
+      }
+      return Arrays.asList(values).contains(value);
+    }
+
+  }
 }

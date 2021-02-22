@@ -35,44 +35,44 @@ import java.util.TimeZone;
 @EnableWebMvc
 public class BaseBootWebMvcConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowCredentials(true)
-                .allowedHeaders("*")
-                .allowedOrigins("*")
-                .allowedMethods("*");
-    }
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+        .allowCredentials(true)
+        .allowedHeaders("*")
+        .allowedOrigins("*")
+        .allowedMethods("*");
+  }
 
-    @Bean
-    public StringHttpMessageConverter stringHttpMessageConverter() {
-        return new StringHttpMessageConverter();
-    }
+  @Bean
+  public StringHttpMessageConverter stringHttpMessageConverter() {
+    return new StringHttpMessageConverter();
+  }
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")))
-                .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
-                .addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
-                .addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
-        objectMapper.registerModule(simpleModule);
-        // 过滤返回值为字段值为null的信息
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        // Date类型日期全局格式化
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        // GMT+8
-        objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+  @Override
+  public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+    MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+    ObjectMapper objectMapper = new ObjectMapper();
+    SimpleModule simpleModule = new SimpleModule();
+    simpleModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+        .addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        .addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern("HH:mm:ss")))
+        .addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+        .addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")))
+        .addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern("HH:mm:ss")));
+    objectMapper.registerModule(simpleModule);
+    // 过滤返回值为字段值为null的信息
+    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    // Date类型日期全局格式化
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+    // GMT+8
+    objectMapper.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 
-        converter.setObjectMapper(objectMapper);
+    converter.setObjectMapper(objectMapper);
 
-        // 解决responseEntity中有引号的问题
-        converters.add(stringHttpMessageConverter());
-        converters.add(converter);
-    }
+    // 解决responseEntity中有引号的问题
+    converters.add(stringHttpMessageConverter());
+    converters.add(converter);
+  }
 }

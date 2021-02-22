@@ -18,15 +18,15 @@ import java.io.InputStream;
 @Component
 public class BaseBootInit implements CommandLineRunner {
 
-    private static final Logger logger = Logs.get();
+  private static final Logger logger = Logs.get();
 
-    @Override
-    public void run(String... args) throws Exception {
-        try (InputStream is = SimpleProperties.getResourceAsStream(BaseBootConsts.DEFAULT_SYSTEM_FILE)) {
+  @Override
+  public void run(String... args) throws Exception {
+    try (InputStream is = SimpleProperties.getResourceAsStream(BaseBootConsts.DEFAULT_SYSTEM_FILE)) {
 
-        } catch (Exception e) {
-            logger.warn("file:[{}] not exists.", BaseBootConsts.DEFAULT_SYSTEM_FILE);
-            System.err.println("Cannot read " + BaseBootConsts.DEFAULT_SYSTEM_FILE);
-        }
+    } catch (Exception e) {
+      logger.warn("file:[{}] not exists.", BaseBootConsts.DEFAULT_SYSTEM_FILE);
+      System.err.println("Cannot read " + BaseBootConsts.DEFAULT_SYSTEM_FILE);
     }
+  }
 }

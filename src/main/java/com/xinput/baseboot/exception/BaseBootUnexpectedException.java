@@ -6,15 +6,15 @@ package com.xinput.baseboot.exception;
  */
 public class BaseBootUnexpectedException extends RuntimeException {
 
-    public BaseBootUnexpectedException(String message) {
-        super(message);
-    }
+  public BaseBootUnexpectedException(String message) {
+    super(message);
+  }
 
-    public BaseBootUnexpectedException(Throwable exception) {
-        super("Unexpected Error", exception);
-    }
+  public BaseBootUnexpectedException(Throwable exception) {
+    super("Unexpected Error", exception);
+  }
 
-    public BaseBootUnexpectedException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public BaseBootUnexpectedException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

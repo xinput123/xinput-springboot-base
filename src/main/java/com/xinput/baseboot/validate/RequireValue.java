@@ -25,30 +25,30 @@ import java.util.Arrays;
 @Documented
 @Constraint(validatedBy = RequireValue.Check.class)
 public @interface RequireValue {
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    String[] value();
+  String[] value();
 
-    class Check implements ConstraintValidator<RequireValue, Object> {
+  class Check implements ConstraintValidator<RequireValue, Object> {
 
-        private String[] values;
+    private String[] values;
 
-        @Override
-        public void initialize(RequireValue value) {
-            values = value.value();
-        }
-
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || StringUtils.isNullOrEmpty(String.valueOf(value))) {
-                return false;
-            }
-            return Arrays.asList(values).contains(value);
-        }
-
+    @Override
+    public void initialize(RequireValue value) {
+      values = value.value();
     }
+
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || StringUtils.isNullOrEmpty(String.valueOf(value))) {
+        return false;
+      }
+      return Arrays.asList(values).contains(value);
+    }
+
+  }
 }

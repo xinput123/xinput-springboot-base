@@ -8,30 +8,30 @@ import org.springframework.core.io.InputStreamResource;
  */
 public class BaseBootFileException extends RuntimeException {
 
-    private static final long serialVersionUID = -570884929692512780L;
+  private static final long serialVersionUID = -570884929692512780L;
 
-    private InputStreamResource resource;
+  private InputStreamResource resource;
 
-    private Long size;
+  private Long size;
 
-    public BaseBootFileException(InputStreamResource resource, Long size) {
-        this.resource = resource;
-        this.size = size;
-    }
+  public BaseBootFileException(InputStreamResource resource, Long size) {
+    this.resource = resource;
+    this.size = size;
+  }
 
-    public InputStreamResource getResource() {
-        return resource;
-    }
+  public InputStreamResource getResource() {
+    return resource;
+  }
 
-    public void setResource(InputStreamResource resource) {
-        this.resource = resource;
-    }
+  public void setResource(InputStreamResource resource) {
+    this.resource = resource;
+  }
 
-    public Long getSize() {
-        return size;
-    }
+  public Long getSize() {
+    return size;
+  }
 
-    public void setSize(Long size) {
-        this.size = size;
-    }
+  public void setSize(Long size) {
+    this.size = size;
+  }
 }

@@ -18,56 +18,56 @@ import java.util.Locale;
 @Component
 public class SpringContentUtils implements ApplicationContextAware {
 
-    private static ApplicationContext context = null;
+  private static ApplicationContext context = null;
 
-    private static String CURRENT_ACTIVE_PROFILE;
+  private static String CURRENT_ACTIVE_PROFILE;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        context = applicationContext;
+  @Override
+  public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    context = applicationContext;
+  }
+
+  /**
+   * 传入线程中
+   *
+   * @param beanName
+   * @param <T>
+   * @return
+   */
+  public static <T> T getBean(String beanName) {
+    return (T) context.getBean(beanName);
+  }
+
+  /**
+   * 国际化使用
+   *
+   * @param key
+   * @return
+   */
+  public static String getMessage(String key) {
+    return context.getMessage(key, null, Locale.getDefault());
+  }
+
+  /**
+   * 获取当前环境
+   *
+   * @return
+   */
+  public static String getActiveProfile() {
+    if (StringUtils.isNotNullOrEmpty(CURRENT_ACTIVE_PROFILE)) {
+      return CURRENT_ACTIVE_PROFILE;
     }
 
-    /**
-     * 传入线程中
-     *
-     * @param beanName
-     * @param <T>
-     * @return
-     */
-    public static <T> T getBean(String beanName) {
-        return (T) context.getBean(beanName);
+    String[] activeProfiles = context.getEnvironment().getActiveProfiles();
+    if (activeProfiles == null || activeProfiles.length == 0) {
+      CURRENT_ACTIVE_PROFILE = BaseConsts.DEFAULT;
+    } else {
+      CURRENT_ACTIVE_PROFILE = context.getEnvironment().getActiveProfiles()[0];
     }
+    return CURRENT_ACTIVE_PROFILE;
+  }
 
-    /**
-     * 国际化使用
-     *
-     * @param key
-     * @return
-     */
-    public static String getMessage(String key) {
-        return context.getMessage(key, null, Locale.getDefault());
-    }
-
-    /**
-     * 获取当前环境
-     *
-     * @return
-     */
-    public static String getActiveProfile() {
-        if (StringUtils.isNotNullOrEmpty(CURRENT_ACTIVE_PROFILE)) {
-            return CURRENT_ACTIVE_PROFILE;
-        }
-
-        String[] activeProfiles = context.getEnvironment().getActiveProfiles();
-        if (activeProfiles == null || activeProfiles.length == 0) {
-            CURRENT_ACTIVE_PROFILE = BaseConsts.DEFAULT;
-        } else {
-            CURRENT_ACTIVE_PROFILE = context.getEnvironment().getActiveProfiles()[0];
-        }
-        return CURRENT_ACTIVE_PROFILE;
-    }
-
-    public static String getId() {
-        return context.getId();
-    }
+  public static String getId() {
+    return context.getId();
+  }
 }

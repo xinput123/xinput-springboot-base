@@ -22,29 +22,29 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = MaxSize.Check.class)
 public @interface MaxSize {
 
-    int value();
+  int value();
 
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    class Check implements ConstraintValidator<MaxSize, Object> {
+  class Check implements ConstraintValidator<MaxSize, Object> {
 
-        int maxSize;
+    int maxSize;
 
-        @Override
-        public void initialize(MaxSize annotation) {
-            maxSize = annotation.value();
-        }
-
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || value.toString().length() == 0) {
-                return true;
-            }
-            return value.toString().length() <= maxSize;
-        }
+    @Override
+    public void initialize(MaxSize annotation) {
+      maxSize = annotation.value();
     }
+
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || value.toString().length() == 0) {
+        return true;
+      }
+      return value.toString().length() <= maxSize;
+    }
+  }
 }

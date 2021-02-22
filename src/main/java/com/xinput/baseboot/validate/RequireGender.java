@@ -23,23 +23,23 @@ import java.lang.annotation.Target;
 @Documented
 @Constraint(validatedBy = RequireGender.Check.class)
 public @interface RequireGender {
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    class Check implements ConstraintValidator<RequireGender, Object> {
+  class Check implements ConstraintValidator<RequireGender, Object> {
 
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || value.toString().length() == 0) {
-                return false;
-            }
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || value.toString().length() == 0) {
+        return false;
+      }
 
-            String gender = String.valueOf(value);
-            return BaseConsts.FEMALE.equalsIgnoreCase(gender)
-                    || BaseConsts.FEMALE.equalsIgnoreCase(gender);
-        }
+      String gender = String.valueOf(value);
+      return BaseConsts.FEMALE.equalsIgnoreCase(gender)
+          || BaseConsts.FEMALE.equalsIgnoreCase(gender);
     }
+  }
 }

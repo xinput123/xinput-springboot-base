@@ -22,29 +22,29 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = MinSize.Check.class)
 public @interface MinSize {
 
-    int value();
+  int value();
 
-    String message();
+  String message();
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 
-    class Check implements ConstraintValidator<MinSize, Object> {
+  class Check implements ConstraintValidator<MinSize, Object> {
 
-        int minSize;
+    int minSize;
 
-        @Override
-        public void initialize(MinSize annotation) {
-            minSize = annotation.value();
-        }
-
-        @Override
-        public boolean isValid(Object value, ConstraintValidatorContext context) {
-            if (value == null || value.toString().length() == 0) {
-                return true;
-            }
-            return value.toString().length() >= minSize;
-        }
+    @Override
+    public void initialize(MinSize annotation) {
+      minSize = annotation.value();
     }
+
+    @Override
+    public boolean isValid(Object value, ConstraintValidatorContext context) {
+      if (value == null || value.toString().length() == 0) {
+        return true;
+      }
+      return value.toString().length() >= minSize;
+    }
+  }
 }
